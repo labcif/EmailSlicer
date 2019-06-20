@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libpff
+Description: Library to access the Personal Folder File (OST, PAB and PST) format
+Version: 20180714
+Libs: -L${libdir} -lpff
+Libs.private:                 -lpthread 
+Cflags: -I${includedir}
+

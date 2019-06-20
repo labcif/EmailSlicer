@@ -1,0 +1,14 @@
+
+t1 = time.time()
+self._extract_all_messages_with_body(message_data)
+print('Pool took: ', time.time() - t1)
+        
+        
+t2 = time.time()
+for message in message_data:
+    writers.eml_writer.message_to_writer(message)
+print('Serial took: ', time.time() - t2)
+        
+t3 = time.time()
+self.ass(message_data)
+print('Async took: ', time.time() - t3)

@@ -1,0 +1,69 @@
+PST2DII(1)              libpst Utilities - Version 0.6              PST2DII(1)
+
+
+
+NNAAMMEE
+       pst2dii - extract email messages from a MS Outlook .pst file in DII
+       load format
+
+SSYYNNOOPPSSIISS
+       ppsstt22ddiiii [--BB _b_a_t_e_s_-_p_r_e_f_i_x] [--OO _d_i_i_-_o_u_t_p_u_t_-_f_i_l_e] [--VV] [--bb _b_a_t_e_s_-_n_u_m_b_e_r]
+               [--cc _b_a_t_e_s_-_c_o_l_o_r] [--dd _d_e_b_u_g_-_f_i_l_e] -f _t_t_f_-_f_o_n_t_-_f_i_l_e [--hh]
+               [--oo _o_u_t_p_u_t_-_d_i_r_e_c_t_o_r_y] pstfilename
+
+OOPPTTIIOONNSS
+       -B _b_a_t_e_s_-_p_r_e_f_i_x
+           Sets the bates prefix string. The bates sequence number is appended
+           to this string, and printed on each page.
+
+       -O _d_i_i_-_o_u_t_p_u_t_-_f_i_l_e
+           Name of the output DII load file.
+
+       -V
+           Show program version. Subsequent options are then ignored.
+
+       -b _b_a_t_e_s_-_n_u_m_b_e_r
+           Starting bates sequence number. The default is zero.
+
+       -c _b_a_t_e_s_-_c_o_l_o_r
+           Font color for the bates stamp on each page, specified as 6 hex
+           digits as rrggbb values. The default is ff0000 for bright red.
+
+       -d _d_e_b_u_g_-_f_i_l_e
+           Specify name of debug log file. The log file is now an ascii file,
+           instead of the binary file used in previous versions.
+
+       -f _t_t_f_-_f_o_n_t_-_f_i_l_e
+           Specify name of a true type font file. This should be a fixed pitch
+           font.
+
+       -h
+           Show summary of options. Subsequent options are then ignored.
+
+       -o _o_u_t_p_u_t_-_d_i_r_e_c_t_o_r_y
+           Specifies the output directory. The directory must already exist.
+
+DDEESSCCRRIIPPTTIIOONN
+       ppsstt22ddiiii reads the email messages from a MS Outlook .pst file and
+       produces a DII load file that may be used to import message summaries
+       into a Summation DII system. The DII output file contains references to
+       the image and attachment files in the output directory.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 2008 by 510 Software Group <carl@five-ten-sg.com>
+
+       This program is free software; you can redistribute it and/or modify it
+       under the terms of the GNU General Public License as published by the
+       Free Software Foundation; either version 2, or (at your option) any
+       later version.
+
+       You should have received a copy of the GNU General Public License along
+       with this program; see the file COPYING. If not, please write to the
+       Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+VVEERRSSIIOONN
+       0.6.63
+
+
+
+pst2dii 0.6.63                    2013-06-12                        PST2DII(1)

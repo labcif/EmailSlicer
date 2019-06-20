@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libesedb
+Description: Library to access the Extensible Storage Engine (ESE) Database File (EDB) format
+Version: 20181229
+Libs: -L${libdir} -lesedb
+Libs.private:                -lpthread
+Cflags: -I${includedir}
+

@@ -1,0 +1,518 @@
+2019-05-05 18:42:59,591 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:42:59,591 | DEBUG | System linux
+2019-05-05 18:42:59,591 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:42:59,591 | INFO | Starting Script...
+2019-05-05 18:42:59,591 | DEBUG | Opening PST for processing...
+2019-05-05 18:42:59,671 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:42:59,672 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:42:59,672 | WARNING | Empty message not processed
+2019-05-05 18:42:59,673 | DEBUG | Processing Folder: Sent Items
+2019-05-05 18:42:59,673 | WARNING | Empty message not processed
+2019-05-05 18:42:59,673 | DEBUG | Processing Folder: Inbox
+2019-05-05 18:42:59,674 | WARNING | Empty message not processed
+2019-05-05 18:42:59,674 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:42:59,674 | WARNING | Empty message not processed
+2019-05-05 18:42:59,674 | DEBUG | Processing Folder: Contacts
+2019-05-05 18:42:59,674 | WARNING | Empty message not processed
+2019-05-05 18:42:59,675 | DEBUG | Processing Folder: ExMerge - Meyers, Albert
+2019-05-05 18:42:59,675 | WARNING | Empty message not processed
+2019-05-05 18:42:59,675 | DEBUG | Processing Folder: meyers-a
+2019-05-05 18:42:59,675 | WARNING | Empty message not processed
+2019-05-05 18:42:59,675 | DEBUG | Processing Folder: Itens eliminados
+2019-05-05 18:43:18,688 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:43:18,689 | DEBUG | System linux
+2019-05-05 18:43:18,689 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:43:18,689 | INFO | Starting Script...
+2019-05-05 18:43:18,689 | DEBUG | Opening PST for processing...
+2019-05-05 18:43:19,415 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:43:19,415 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:43:19,415 | WARNING | Empty message not processed
+2019-05-05 18:43:19,416 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:43:19,417 | WARNING | Empty message not processed
+2019-05-05 18:43:19,417 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:43:20,243 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:20,246 | WARNING | Empty message not processed
+2019-05-05 18:43:20,246 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:43:20,246 | WARNING | Empty message not processed
+2019-05-05 18:43:20,247 | DEBUG | Processing Folder: All documents
+2019-05-05 18:43:22,493 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:22,493 | WARNING | Empty message not processed
+2019-05-05 18:43:22,494 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:43:22,494 | WARNING | Empty message not processed
+2019-05-05 18:43:22,494 | DEBUG | Processing Folder: test
+2019-05-05 18:43:22,497 | DEBUG | Processing Folder: All documents
+2019-05-05 18:43:22,788 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:22,790 | WARNING | Empty message not processed
+2019-05-05 18:43:22,790 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:43:22,790 | WARNING | Empty message not processed
+2019-05-05 18:43:22,790 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:43:22,790 | WARNING | Empty message not processed
+2019-05-05 18:43:22,790 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:43:22,790 | WARNING | Empty message not processed
+2019-05-05 18:43:22,791 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:43:22,791 | WARNING | Empty message not processed
+2019-05-05 18:43:22,791 | DEBUG | Generating Reports...
+2019-05-05 18:43:28,918 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:43:28,918 | DEBUG | System linux
+2019-05-05 18:43:28,918 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:43:28,918 | INFO | Starting Script...
+2019-05-05 18:43:28,918 | DEBUG | Opening PST for processing...
+2019-05-05 18:43:29,629 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:43:29,629 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:43:29,629 | WARNING | Empty message not processed
+2019-05-05 18:43:29,631 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:43:29,631 | WARNING | Empty message not processed
+2019-05-05 18:43:29,631 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:43:30,427 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:30,431 | WARNING | Empty message not processed
+2019-05-05 18:43:30,431 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:43:30,431 | WARNING | Empty message not processed
+2019-05-05 18:43:30,432 | DEBUG | Processing Folder: All documents
+2019-05-05 18:43:32,684 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:32,685 | WARNING | Empty message not processed
+2019-05-05 18:43:32,685 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:43:32,685 | WARNING | Empty message not processed
+2019-05-05 18:43:32,685 | DEBUG | Processing Folder: test
+2019-05-05 18:43:32,688 | DEBUG | Processing Folder: All documents
+2019-05-05 18:43:32,970 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:32,972 | WARNING | Empty message not processed
+2019-05-05 18:43:32,972 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:43:32,973 | WARNING | Empty message not processed
+2019-05-05 18:43:32,973 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:43:32,973 | WARNING | Empty message not processed
+2019-05-05 18:43:32,973 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:43:32,973 | WARNING | Empty message not processed
+2019-05-05 18:43:32,973 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:43:32,973 | WARNING | Empty message not processed
+2019-05-05 18:43:32,973 | DEBUG | Generating Reports...
+2019-05-05 18:43:56,456 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:43:56,456 | DEBUG | System linux
+2019-05-05 18:43:56,456 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:43:56,456 | INFO | Starting Script...
+2019-05-05 18:43:56,456 | DEBUG | Opening PST for processing...
+2019-05-05 18:43:57,124 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:43:57,124 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:43:57,124 | WARNING | Empty message not processed
+2019-05-05 18:43:57,125 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:43:57,125 | WARNING | Empty message not processed
+2019-05-05 18:43:57,126 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:43:57,948 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:43:57,951 | WARNING | Empty message not processed
+2019-05-05 18:43:57,952 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:43:57,952 | WARNING | Empty message not processed
+2019-05-05 18:43:57,952 | DEBUG | Processing Folder: All documents
+2019-05-05 18:44:00,353 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:44:00,353 | WARNING | Empty message not processed
+2019-05-05 18:44:00,354 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:44:00,354 | WARNING | Empty message not processed
+2019-05-05 18:44:00,354 | DEBUG | Processing Folder: test
+2019-05-05 18:44:00,357 | DEBUG | Processing Folder: All documents
+2019-05-05 18:44:00,639 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:44:00,641 | WARNING | Empty message not processed
+2019-05-05 18:44:00,642 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:44:00,642 | WARNING | Empty message not processed
+2019-05-05 18:44:00,642 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:44:00,642 | WARNING | Empty message not processed
+2019-05-05 18:44:00,642 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:44:00,642 | WARNING | Empty message not processed
+2019-05-05 18:44:00,642 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:44:00,642 | WARNING | Empty message not processed
+2019-05-05 18:44:00,642 | DEBUG | Generating Reports...
+2019-05-05 18:45:12,289 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:45:12,289 | DEBUG | System linux
+2019-05-05 18:45:12,289 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:45:12,289 | INFO | Starting Script...
+2019-05-05 18:45:12,290 | DEBUG | Opening PST for processing...
+2019-05-05 18:45:12,945 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:45:12,945 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:45:12,946 | WARNING | Empty message not processed
+2019-05-05 18:45:12,947 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:45:12,947 | WARNING | Empty message not processed
+2019-05-05 18:45:12,948 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:45:13,757 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:45:13,761 | WARNING | Empty message not processed
+2019-05-05 18:45:13,761 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:45:13,762 | WARNING | Empty message not processed
+2019-05-05 18:45:13,763 | DEBUG | Processing Folder: All documents
+2019-05-05 18:45:16,005 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:45:16,005 | WARNING | Empty message not processed
+2019-05-05 18:45:16,005 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:45:16,005 | WARNING | Empty message not processed
+2019-05-05 18:45:16,005 | DEBUG | Processing Folder: test
+2019-05-05 18:45:16,008 | DEBUG | Processing Folder: All documents
+2019-05-05 18:45:16,291 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:45:16,293 | WARNING | Empty message not processed
+2019-05-05 18:45:16,293 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:45:16,293 | WARNING | Empty message not processed
+2019-05-05 18:45:16,293 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:45:16,294 | WARNING | Empty message not processed
+2019-05-05 18:45:16,294 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:45:16,294 | WARNING | Empty message not processed
+2019-05-05 18:45:16,294 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:45:16,294 | WARNING | Empty message not processed
+2019-05-05 18:45:16,294 | DEBUG | Generating Reports...
+2019-05-05 18:45:30,726 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:45:30,727 | DEBUG | System linux
+2019-05-05 18:45:30,727 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:45:30,727 | INFO | Starting Script...
+2019-05-05 18:45:30,727 | DEBUG | Opening PST for processing...
+2019-05-05 18:45:31,583 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:45:31,584 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:45:31,584 | WARNING | Empty message not processed
+2019-05-05 18:45:31,585 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:45:31,585 | WARNING | Empty message not processed
+2019-05-05 18:45:31,586 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:45:32,557 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:45:32,561 | WARNING | Empty message not processed
+2019-05-05 18:45:32,561 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:45:32,561 | WARNING | Empty message not processed
+2019-05-05 18:45:32,562 | DEBUG | Processing Folder: All documents
+2019-05-05 18:45:35,068 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:45:35,068 | WARNING | Empty message not processed
+2019-05-05 18:45:35,068 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:45:35,068 | WARNING | Empty message not processed
+2019-05-05 18:45:35,069 | DEBUG | Processing Folder: test
+2019-05-05 18:45:35,072 | DEBUG | Processing Folder: All documents
+2019-05-05 18:45:35,361 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:45:35,364 | WARNING | Empty message not processed
+2019-05-05 18:45:35,364 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:45:35,364 | WARNING | Empty message not processed
+2019-05-05 18:45:35,364 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:45:35,364 | WARNING | Empty message not processed
+2019-05-05 18:45:35,364 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:45:35,364 | WARNING | Empty message not processed
+2019-05-05 18:45:35,365 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:45:35,365 | WARNING | Empty message not processed
+2019-05-05 18:45:35,365 | DEBUG | Generating Reports...
+2019-05-05 18:45:37,952 | INFO | Script Complete
+2019-05-05 18:49:10,613 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:49:10,613 | DEBUG | System linux
+2019-05-05 18:49:10,613 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:49:10,613 | INFO | Starting Script...
+2019-05-05 18:49:10,613 | DEBUG | Opening PST for processing...
+2019-05-05 18:49:11,418 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:49:11,418 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:49:11,418 | WARNING | Empty message not processed
+2019-05-05 18:49:11,419 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:49:11,419 | WARNING | Empty message not processed
+2019-05-05 18:49:11,420 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:49:14,844 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:49:14,845 | DEBUG | System linux
+2019-05-05 18:49:14,845 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:49:14,845 | INFO | Starting Script...
+2019-05-05 18:49:14,845 | DEBUG | Opening PST for processing...
+2019-05-05 18:49:15,535 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:49:15,535 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:49:15,535 | WARNING | Empty message not processed
+2019-05-05 18:49:15,536 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:49:15,536 | WARNING | Empty message not processed
+2019-05-05 18:49:15,537 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:49:16,344 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:49:16,348 | WARNING | Empty message not processed
+2019-05-05 18:49:16,348 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:49:16,348 | WARNING | Empty message not processed
+2019-05-05 18:49:16,349 | DEBUG | Processing Folder: All documents
+2019-05-05 18:49:18,670 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:49:18,670 | WARNING | Empty message not processed
+2019-05-05 18:49:18,670 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:49:18,670 | WARNING | Empty message not processed
+2019-05-05 18:49:18,671 | DEBUG | Processing Folder: test
+2019-05-05 18:49:18,674 | DEBUG | Processing Folder: All documents
+2019-05-05 18:49:18,951 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:49:18,953 | WARNING | Empty message not processed
+2019-05-05 18:49:18,953 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:49:18,953 | WARNING | Empty message not processed
+2019-05-05 18:49:18,953 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:49:18,953 | WARNING | Empty message not processed
+2019-05-05 18:49:18,953 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:49:18,954 | WARNING | Empty message not processed
+2019-05-05 18:49:18,954 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:49:18,954 | WARNING | Empty message not processed
+2019-05-05 18:49:18,954 | DEBUG | Generating Reports...
+2019-05-05 18:50:01,975 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:50:01,976 | DEBUG | System linux
+2019-05-05 18:50:01,976 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:50:01,976 | INFO | Starting Script...
+2019-05-05 18:50:01,976 | DEBUG | Opening PST for processing...
+2019-05-05 18:50:02,654 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:50:02,654 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:50:02,655 | WARNING | Empty message not processed
+2019-05-05 18:50:02,657 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:50:02,658 | WARNING | Empty message not processed
+2019-05-05 18:50:02,659 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:50:03,474 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:03,477 | WARNING | Empty message not processed
+2019-05-05 18:50:03,477 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:50:03,477 | WARNING | Empty message not processed
+2019-05-05 18:50:03,478 | DEBUG | Processing Folder: All documents
+2019-05-05 18:50:05,758 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:05,758 | WARNING | Empty message not processed
+2019-05-05 18:50:05,758 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:50:05,758 | WARNING | Empty message not processed
+2019-05-05 18:50:05,759 | DEBUG | Processing Folder: test
+2019-05-05 18:50:05,762 | DEBUG | Processing Folder: All documents
+2019-05-05 18:50:06,045 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:06,047 | WARNING | Empty message not processed
+2019-05-05 18:50:06,048 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:50:06,048 | WARNING | Empty message not processed
+2019-05-05 18:50:06,048 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:50:06,048 | WARNING | Empty message not processed
+2019-05-05 18:50:06,049 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:50:06,049 | WARNING | Empty message not processed
+2019-05-05 18:50:06,049 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:50:06,049 | WARNING | Empty message not processed
+2019-05-05 18:50:06,049 | DEBUG | Generating Reports...
+2019-05-05 18:50:17,414 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:50:17,414 | DEBUG | System linux
+2019-05-05 18:50:17,414 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:50:17,414 | INFO | Starting Script...
+2019-05-05 18:50:17,414 | DEBUG | Opening PST for processing...
+2019-05-05 18:50:18,378 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:50:18,378 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:50:18,378 | WARNING | Empty message not processed
+2019-05-05 18:50:18,382 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:50:18,382 | WARNING | Empty message not processed
+2019-05-05 18:50:18,383 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:50:19,465 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:19,468 | WARNING | Empty message not processed
+2019-05-05 18:50:19,468 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:50:19,468 | WARNING | Empty message not processed
+2019-05-05 18:50:19,469 | DEBUG | Processing Folder: All documents
+2019-05-05 18:50:21,805 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:21,805 | WARNING | Empty message not processed
+2019-05-05 18:50:21,805 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:50:21,806 | WARNING | Empty message not processed
+2019-05-05 18:50:21,806 | DEBUG | Processing Folder: test
+2019-05-05 18:50:21,809 | DEBUG | Processing Folder: All documents
+2019-05-05 18:50:22,098 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:22,100 | WARNING | Empty message not processed
+2019-05-05 18:50:22,101 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:50:22,101 | WARNING | Empty message not processed
+2019-05-05 18:50:22,101 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:50:22,101 | WARNING | Empty message not processed
+2019-05-05 18:50:22,101 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:50:22,101 | WARNING | Empty message not processed
+2019-05-05 18:50:22,101 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:50:22,101 | WARNING | Empty message not processed
+2019-05-05 18:50:22,102 | DEBUG | Generating Reports...
+2019-05-05 18:50:26,340 | INFO | Script Complete
+2019-05-05 18:50:54,295 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:50:54,295 | DEBUG | System linux
+2019-05-05 18:50:54,295 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:50:54,295 | INFO | Starting Script...
+2019-05-05 18:50:54,295 | DEBUG | Opening PST for processing...
+2019-05-05 18:50:54,954 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:50:54,955 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:50:54,955 | WARNING | Empty message not processed
+2019-05-05 18:50:54,956 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:50:54,956 | WARNING | Empty message not processed
+2019-05-05 18:50:54,957 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:50:55,772 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:55,776 | WARNING | Empty message not processed
+2019-05-05 18:50:55,777 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:50:55,777 | WARNING | Empty message not processed
+2019-05-05 18:50:55,777 | DEBUG | Processing Folder: All documents
+2019-05-05 18:50:58,019 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:58,020 | WARNING | Empty message not processed
+2019-05-05 18:50:58,020 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:50:58,020 | WARNING | Empty message not processed
+2019-05-05 18:50:58,020 | DEBUG | Processing Folder: test
+2019-05-05 18:50:58,023 | DEBUG | Processing Folder: All documents
+2019-05-05 18:50:58,303 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:50:58,305 | WARNING | Empty message not processed
+2019-05-05 18:50:58,305 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:50:58,305 | WARNING | Empty message not processed
+2019-05-05 18:50:58,305 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:50:58,306 | WARNING | Empty message not processed
+2019-05-05 18:50:58,306 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:50:58,306 | WARNING | Empty message not processed
+2019-05-05 18:50:58,306 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:50:58,306 | WARNING | Empty message not processed
+2019-05-05 18:50:58,306 | DEBUG | Generating Reports...
+2019-05-05 18:51:02,563 | INFO | Script Complete
+2019-05-05 18:58:24,068 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 18:58:24,068 | DEBUG | System linux
+2019-05-05 18:58:24,068 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 18:58:24,068 | INFO | Starting Script...
+2019-05-05 18:58:24,068 | DEBUG | Opening PST for processing...
+2019-05-05 18:58:24,693 | DEBUG | Starting traverse of PST structure...
+2019-05-05 18:58:24,693 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 18:58:24,693 | WARNING | Empty message not processed
+2019-05-05 18:58:24,694 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 18:58:24,695 | WARNING | Empty message not processed
+2019-05-05 18:58:24,695 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 18:58:25,462 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:58:25,466 | WARNING | Empty message not processed
+2019-05-05 18:58:25,466 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 18:58:25,466 | WARNING | Empty message not processed
+2019-05-05 18:58:25,467 | DEBUG | Processing Folder: All documents
+2019-05-05 18:58:27,580 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:58:27,580 | WARNING | Empty message not processed
+2019-05-05 18:58:27,580 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:58:27,581 | WARNING | Empty message not processed
+2019-05-05 18:58:27,581 | DEBUG | Processing Folder: test
+2019-05-05 18:58:27,584 | DEBUG | Processing Folder: All documents
+2019-05-05 18:58:27,856 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 18:58:27,858 | WARNING | Empty message not processed
+2019-05-05 18:58:27,859 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 18:58:27,859 | WARNING | Empty message not processed
+2019-05-05 18:58:27,859 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 18:58:27,859 | WARNING | Empty message not processed
+2019-05-05 18:58:27,859 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 18:58:27,859 | WARNING | Empty message not processed
+2019-05-05 18:58:27,859 | DEBUG | Processing Folder: Search Root
+2019-05-05 18:58:27,860 | WARNING | Empty message not processed
+2019-05-05 18:58:27,860 | DEBUG | Generating Reports...
+2019-05-05 18:58:32,405 | INFO | Script Complete
+2019-05-05 19:23:15,297 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 19:23:15,297 | DEBUG | System linux
+2019-05-05 19:23:15,297 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 19:23:15,297 | INFO | Starting Script...
+2019-05-05 19:23:15,297 | DEBUG | Opening PST for processing...
+2019-05-05 19:23:16,122 | DEBUG | Starting traverse of PST structure...
+2019-05-05 19:23:16,123 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 19:23:16,123 | WARNING | Empty message not processed
+2019-05-05 19:23:16,125 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 19:23:16,125 | WARNING | Empty message not processed
+2019-05-05 19:23:16,126 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 19:23:17,038 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:23:17,042 | WARNING | Empty message not processed
+2019-05-05 19:23:17,042 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 19:23:17,043 | WARNING | Empty message not processed
+2019-05-05 19:23:17,043 | DEBUG | Processing Folder: All documents
+2019-05-05 19:23:19,832 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:23:19,833 | WARNING | Empty message not processed
+2019-05-05 19:23:19,833 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:23:19,833 | WARNING | Empty message not processed
+2019-05-05 19:23:19,833 | DEBUG | Processing Folder: test
+2019-05-05 19:23:19,836 | DEBUG | Processing Folder: All documents
+2019-05-05 19:23:20,139 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:23:20,140 | WARNING | Empty message not processed
+2019-05-05 19:23:20,141 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:23:20,141 | WARNING | Empty message not processed
+2019-05-05 19:23:20,141 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 19:23:20,141 | WARNING | Empty message not processed
+2019-05-05 19:23:20,141 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 19:23:20,141 | WARNING | Empty message not processed
+2019-05-05 19:23:20,141 | DEBUG | Processing Folder: Search Root
+2019-05-05 19:23:20,141 | WARNING | Empty message not processed
+2019-05-05 19:23:20,141 | DEBUG | Generating Reports...
+2019-05-05 19:23:26,141 | INFO | Script Complete
+2019-05-05 19:24:09,247 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 19:24:09,247 | DEBUG | System linux
+2019-05-05 19:24:09,247 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 19:24:09,247 | INFO | Starting Script...
+2019-05-05 19:24:09,247 | DEBUG | Opening PST for processing...
+2019-05-05 19:24:09,926 | DEBUG | Starting traverse of PST structure...
+2019-05-05 19:24:09,926 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 19:24:09,926 | WARNING | Empty message not processed
+2019-05-05 19:24:09,927 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 19:24:09,927 | WARNING | Empty message not processed
+2019-05-05 19:24:09,929 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 19:24:10,933 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:24:10,937 | WARNING | Empty message not processed
+2019-05-05 19:24:10,937 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 19:24:10,937 | WARNING | Empty message not processed
+2019-05-05 19:24:10,938 | DEBUG | Processing Folder: All documents
+2019-05-05 19:24:13,339 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:24:13,340 | WARNING | Empty message not processed
+2019-05-05 19:24:13,340 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:24:13,340 | WARNING | Empty message not processed
+2019-05-05 19:24:13,340 | DEBUG | Processing Folder: test
+2019-05-05 19:24:13,343 | DEBUG | Processing Folder: All documents
+2019-05-05 19:24:13,627 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:24:13,629 | WARNING | Empty message not processed
+2019-05-05 19:24:13,629 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:24:13,630 | WARNING | Empty message not processed
+2019-05-05 19:24:13,630 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 19:24:13,630 | WARNING | Empty message not processed
+2019-05-05 19:24:13,630 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 19:24:13,630 | WARNING | Empty message not processed
+2019-05-05 19:24:13,630 | DEBUG | Processing Folder: Search Root
+2019-05-05 19:24:13,630 | WARNING | Empty message not processed
+2019-05-05 19:24:13,631 | DEBUG | Generating Reports...
+2019-05-05 19:24:20,010 | INFO | Script Complete
+2019-05-05 19:24:40,946 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 19:24:40,946 | DEBUG | System linux
+2019-05-05 19:24:40,946 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 19:24:40,946 | INFO | Starting Script...
+2019-05-05 19:24:40,946 | DEBUG | Opening PST for processing...
+2019-05-05 19:24:41,655 | DEBUG | Starting traverse of PST structure...
+2019-05-05 19:24:41,655 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 19:24:41,655 | WARNING | Empty message not processed
+2019-05-05 19:24:41,656 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 19:24:41,656 | WARNING | Empty message not processed
+2019-05-05 19:24:41,658 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 19:24:42,459 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:24:42,462 | WARNING | Empty message not processed
+2019-05-05 19:24:42,462 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 19:24:42,463 | WARNING | Empty message not processed
+2019-05-05 19:24:42,463 | DEBUG | Processing Folder: All documents
+2019-05-05 19:24:45,097 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:24:45,097 | WARNING | Empty message not processed
+2019-05-05 19:24:45,098 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:24:45,098 | WARNING | Empty message not processed
+2019-05-05 19:24:45,098 | DEBUG | Processing Folder: test
+2019-05-05 19:24:45,101 | DEBUG | Processing Folder: All documents
+2019-05-05 19:24:45,443 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:24:45,445 | WARNING | Empty message not processed
+2019-05-05 19:24:45,445 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:24:45,446 | WARNING | Empty message not processed
+2019-05-05 19:24:45,446 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 19:24:45,446 | WARNING | Empty message not processed
+2019-05-05 19:24:45,446 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 19:24:45,446 | WARNING | Empty message not processed
+2019-05-05 19:24:45,446 | DEBUG | Processing Folder: Search Root
+2019-05-05 19:24:45,447 | WARNING | Empty message not processed
+2019-05-05 19:24:45,447 | DEBUG | Generating Reports...
+2019-05-05 19:24:52,898 | INFO | Script Complete
+2019-05-05 19:25:14,688 | INFO | Starting PST_Indexer v.0.01
+2019-05-05 19:25:14,688 | DEBUG | System linux
+2019-05-05 19:25:14,688 | DEBUG | Version 3.6.7 (default, Oct 22 2018, 11:32:17) 
+[GCC 8.2.0]
+2019-05-05 19:25:14,688 | INFO | Starting Script...
+2019-05-05 19:25:14,688 | DEBUG | Opening PST for processing...
+2019-05-05 19:25:15,409 | DEBUG | Starting traverse of PST structure...
+2019-05-05 19:25:15,409 | DEBUG | Processing Folder: SPAM Search Folder 2
+2019-05-05 19:25:15,410 | WARNING | Empty message not processed
+2019-05-05 19:25:15,411 | DEBUG | Processing Folder: Deleted Items
+2019-05-05 19:25:15,411 | WARNING | Empty message not processed
+2019-05-05 19:25:15,412 | DEBUG | Processing Folder: Discussion threads
+2019-05-05 19:25:16,227 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:25:16,231 | WARNING | Empty message not processed
+2019-05-05 19:25:16,231 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_7
+2019-05-05 19:25:16,231 | WARNING | Empty message not processed
+2019-05-05 19:25:16,232 | DEBUG | Processing Folder: All documents
+2019-05-05 19:25:18,852 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:25:18,853 | WARNING | Empty message not processed
+2019-05-05 19:25:18,853 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:25:18,854 | WARNING | Empty message not processed
+2019-05-05 19:25:18,854 | DEBUG | Processing Folder: test
+2019-05-05 19:25:18,857 | DEBUG | Processing Folder: All documents
+2019-05-05 19:25:19,157 | DEBUG | Processing Folder: Notes Folders
+2019-05-05 19:25:19,159 | WARNING | Empty message not processed
+2019-05-05 19:25:19,160 | DEBUG | Processing Folder: Vincent_Kaminski_Jun2001_6
+2019-05-05 19:25:19,160 | WARNING | Empty message not processed
+2019-05-05 19:25:19,160 | DEBUG | Processing Folder: kaminski-v
+2019-05-05 19:25:19,160 | WARNING | Empty message not processed
+2019-05-05 19:25:19,160 | DEBUG | Processing Folder: Top of Personal Folders
+2019-05-05 19:25:19,161 | WARNING | Empty message not processed
+2019-05-05 19:25:19,161 | DEBUG | Processing Folder: Search Root
+2019-05-05 19:25:19,161 | WARNING | Empty message not processed
+2019-05-05 19:25:19,161 | DEBUG | Generating Reports...
+2019-05-05 19:25:26,266 | INFO | Script Complete
