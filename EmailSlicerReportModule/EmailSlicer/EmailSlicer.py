@@ -82,42 +82,6 @@ class EmailSlicer:
         date_dict = {x: 0 for x in range(1, 25)}
         self.date_list = [date_dict.copy() for x in range(7)]
 
-        self.structure_tree = {}
-        """
-        {
-            "name": "Emails Root",
-            "children":
-            [
-                {
-                    "name": "Inbox",
-                    "value": 30000,
-                    "children":
-                    [
-                        {
-                            "name": "Saved Emails",
-                            "children": [
-                                {"name": ".eml", "value": 6714},
-                                {"name": ".ics", "value": 743}
-                            ]
-                        },
-                        {
-                            "name": ".eml",
-                            "value": 102
-                        },
-                        {
-                            "name": ".ics",
-                            "value": 2
-                        }
-                    ]
-                },
-                {
-                    "name": "Tarefas",
-                    "value": 30
-                }
-            ]
-        }
-        """
-
         self.emails_with_sender_receiver = {}
 
         # Get databse name
@@ -261,6 +225,9 @@ class EmailSlicer:
         # Get date
         date = mail.date
 
+        # Get body
+        body = mail.body
+
         # Build heat map based on email message received time
         self.build_heat_map(_file, date)
 
@@ -271,6 +238,7 @@ class EmailSlicer:
             # Populate variable
             self.emails_with_sender_receiver[_file] = [{
                 'subject': subject,
+                'body': body,
                 'date': date_epoch,
                 'sender': {},
                 'receiver': []
@@ -434,12 +402,15 @@ class EmailSlicer:
         # Set date
         date = data[0]['date']
 
+        # Set body
+        body = data[0]['body']
+
         # Insert email into table:
         #       - emails
         # Get id from emails table
 
         email_id = db_opperations.db_insert.insert_email(
-            connection, subject, location, date)
+            connection, subject, body, location, date)
 
         # Set receivers
         receivers = data[0]['receiver']
@@ -858,8 +829,8 @@ if __name__ == "__main__":
         if operation_system == 'nt':
 
             # Operation System: Windows
-            cmd = ('C:/Users/2151580/Desktop/bin/readpst.exe -D -b -e -j {} -o {} {}'
-                .format(number_processes, output_extraction, file_path))  # retunrs 0 in case of success
+            cmd = ('{}\\utils\\readpst\\bin\\readpst.exe -D -b -e -j {} -o {} {}'
+                .format(os.path.dirname(os.path.realpath(__file__)), number_processes, output_extraction, file_path))  # retunrs 0 in case of success
             subprocess.call(cmd, shell=True)
             
         elif operation_system == 'posix':

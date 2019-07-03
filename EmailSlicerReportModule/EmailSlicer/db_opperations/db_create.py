@@ -48,6 +48,7 @@ def create_emails_table():
         emails (
             id INTEGER PRIMARY KEY,
             subject TEXT,
+            body TEXT,
             location TEXT,
             date INTEGER
         );

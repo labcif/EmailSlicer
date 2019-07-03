@@ -20,6 +20,7 @@ class Report:
 
     def run(self):
         path = sys.argv[0].replace("EmailSlicer.py", '')
+        logo = '{}utils/icon.png'.format(path)
         open_template1 = open("{}utils/report_template1.html".format(path), 'r').read()
         open_template2 = open("{}utils/report_template2.html".format(path), 'r').read()
         html_template1 = jinja2.Template(open_template1)
@@ -197,10 +198,10 @@ class Report:
                 var app3 = {{}};
                 heatmap_option = null;
                 app3.title = 'Heatmap'; 
-                var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
-                        '7a', '8a', '9a','10a','11a',
-                        '12p', '1p', '2p', '3p', '4p', '5p',
-                        '6p', '7p', '8p', '9p', '10p', '11p'];
+                var hours = ['00h', '01h', '02h', '03h', '04h', '05h', '06h',
+                        '07h', '08h', '09h','10h','11h',
+                        '12h', '13h', '14h', '15h', '16h', '17h',
+                        '18h', '19h', '20h', '21h', '22h', '23h'];
                 var days = ['Saturday', 'Friday', 'Thursday',
                         'Wednesday', 'Tuesday', 'Monday', 'Sunday'];
                 var data = {0};
@@ -283,6 +284,7 @@ class Report:
         #context = {"report_title": report_title, "pst_name": pst_name}
         context1 = {
             'title': self.title,
+            'logo': logo,
             'total_email_messages': self.total_email_messages,
             'total_email_address': self.total_email_address,
             'total_contacts': self.total_contacts,
@@ -294,6 +296,7 @@ class Report:
 
         context2 = {
             'title': self.title,
+            'logo': logo,
             'users_communication': self.users_communication_table,
             'users_messages': self.users_messages_table
 
@@ -318,7 +321,7 @@ class Report:
         count_vcf = 0
         count_eml = 0
         
-        for ics, vcf, eml, unknown in data:
+        for ics, vcf, eml, _ in data:
             count_ics += ics
             count_vcf += vcf
             count_eml += eml

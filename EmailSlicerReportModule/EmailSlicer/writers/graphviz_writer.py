@@ -1,12 +1,14 @@
 from graphviz import Digraph
 from collections import defaultdict 
 import os
+import sys
 
 
 # for windows
 if os.name == 'nt':
     # default path
-    os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/' 
+    path = sys.argv[0].replace("EmailSlicer.py", '')
+    os.environ["PATH"] += os.pathsep + '{}utils/graphviz-2.38/release/bin/'.format(path) 
 
 
 

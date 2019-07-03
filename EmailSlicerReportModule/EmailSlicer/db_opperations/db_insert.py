@@ -43,17 +43,17 @@ def insert_user(connection, user_email, user_name):
     return user_id
 
 
-def insert_email(connection, subject, location, date):
+def insert_email(connection, subject, body, location, date):
     
     # Create cursor
     cursor = connection.cursor()
     
     # Insert email
     query = '''
-        INSERT INTO emails (subject, location, date) 
-        VALUES (?, ?, ?);
+        INSERT INTO emails (subject, body, location, date) 
+        VALUES (?, ?, ?, ?);
     '''
-    cursor.execute(query, (subject, location, date, ))
+    cursor.execute(query, (subject, body, location, date, ))
     
     # Get email id (last insert)
     email_id = cursor.lastrowid
