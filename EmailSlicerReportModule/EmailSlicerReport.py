@@ -16,6 +16,7 @@ import org.sleuthkit.autopsy.casemodule.services.FileManager
 import jarray
 import inspect
 import os
+import time
 from subprocess import Popen, PIPE
 
 from java.lang import Class
@@ -126,6 +127,7 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
     # The 'progressBar' object is of type ReportProgressPanel.
     #   See: http://sleuthkit.org/autopsy/docs/api-docs/4.6.0/classorg_1_1sleuthkit_1_1autopsy_1_1report_1_1_report_progress_panel.html
     def generateReport(self, baseReportDir, progressBar):
+        #start_time = time.time()
         # we don't know how much work there is yet
         # progressBar.switchToIndeterminate()
 
@@ -244,6 +246,16 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
 
         progressBar.complete(ReportStatus.COMPLETE)
 
+        """
+        end_time = time.time()
+        execution_time = end_time - start_time
+        msg = ('Execution time: {} ({} min)'
+            .format(execution_time, execution_time/60))
+        f = open("C:/Users/2151580/AppData/Roaming/autopsy/python_modules/EmailSlicerReportModule/time.txt", "w")
+        #f.write(str(self.temp_dir + FOLDER_PATH))
+        f.write(msg)
+        f.close()
+        """
 
     def processEmails(self, dbConn, skCase, file):
 

@@ -40,13 +40,11 @@ import utils
 
 
 # Program author
-__author__ = 'Andre Nogueira'
+__author__ = 'André Nogueira'
 
 # Program description
 __description__ = '''
-    This scripts calls readpst wich is a program responsible for extracting all content present inside the given .pst/.ost file.
-    The script starts by checking wich operation system is in use to permit it's execution in both windows and linux platforms.
-    After the it's execution it's possible to extract relavant information from the extract files.
+    Program used to extract content from PST/OST files and generate reports.
 '''
 
 # There were no problems
@@ -91,15 +89,15 @@ class EmailSlicer:
         if not skip:
             # Rebuild database (drops if exists and creates)
             self.db_rebuild()
-        #$else:
-            #$print('[INFO] Using previous database')
+        else:
+            print('[INFO] Using previous database')
 
     def run(self):
         
-        #$if not self.skip:
-            #$print('[INFO] Started file scaning')
-        #$else:
-            #$print('[INFO] Skipping file scaning')
+        if not self.skip:
+            print('[INFO] Started file scaning')
+        else:
+            print('[INFO] Skipping file scaning')
            
         total_count = []
 
@@ -119,8 +117,8 @@ class EmailSlicer:
 
             # iterate files
             for _file in files:
-                # #$print("subd > " + root)
-                # #$print("main > " + "".join(dirs))
+                # print("subd > " + root)
+                # print("main > " + "".join(dirs))
 
                 # Get full file path
                 file_full_path = os.path.join(root, _file)
@@ -134,14 +132,14 @@ class EmailSlicer:
                 # Check if file extention is supported
                 number_of_files = self.process_file_extention(file_extention, file_full_path, number_of_files)
             total_count.append(number_of_files)
-            # #$print(root.rsplit('/', 1)[-1] , "\n", number_of_files, "\n\n")
-#            #$print(rootdir)
-#           #$print(root.rsplit('/', 1)[-1])
-        # #$print(tree)
+            # print(root.rsplit('/', 1)[-1] , "\n", number_of_files, "\n\n")
+#            print(rootdir)
+#           print(root.rsplit('/', 1)[-1])
+        # print(tree)
     
             
         # Write reports
-        #$print('[INFO] Generating report...')
+        print('[INFO] Generating report...')
 
         # Write email messages sent by each email account in a .csv file
         sender_frequency = self.email_messages_sent_by_user_email()
@@ -203,8 +201,8 @@ class EmailSlicer:
             # In case of unknown file format
             data[3] += 1
 
-            # #$Print error message and skips to the next file
-            #$print('[WARNING] Unknown file extention (\'.{}\')!'.format(extention))
+            # Print error message and skips to the next file
+            print('[WARNING] Unknown file extention (\'.{}\')!'.format(extention))
             # Returns string unknown if the extention is not known by the program
 
         return_data = [data[0], data[1], data[2], data[3]]
@@ -246,7 +244,7 @@ class EmailSlicer:
 
             # Get formated sender and insert it into the variable
             
-            # #$print(mail.from_)
+            # print(mail.from_)
             self.filter_sender(_file, mail.from_)
 
             # Get formated receiver(s) and insert it into the variable
@@ -264,8 +262,7 @@ class EmailSlicer:
             hour_of_day = date.hour + 1
             self.date_list[day_of_week][hour_of_day] += 1
         except:
-            pass
-            #$print('[WARNING] File \'{}\' file has no received date!'.format(_file))
+            print('[WARNING] File \'{}\' file has no received date!'.format(_file))
 
 
     def filter_sender(self, _file, sender_list):
@@ -304,10 +301,10 @@ class EmailSlicer:
                     'name': sender_name
                 }
             )
-        except: #$Exception as exeption:
-            pass
-            # #$Print error in case of one
-            #$print('ERROR \'sender\': ', exeption)
+        except Exception as exeption:
+
+            # Print error in case of one
+            print('ERROR \'sender\': ', exeption)
 
 
     def filter_receiver(self, _file, receiver_list):
@@ -331,10 +328,10 @@ class EmailSlicer:
                         'name': receiver_name
                     }
                 )
-            except: #$Exception as exeption:
-                pass
-                # #$Print error in case of one
-                #$print('ERROR \'receiver\': ', exeption)
+            except Exception as exeption:
+
+                # Print error in case of one
+                print('ERROR \'receiver\': ', exeption)
 
         # Iterate over each receiver
         for receiver in receiver_list:
@@ -369,10 +366,10 @@ class EmailSlicer:
                         'name': receiver_name
                     }
                 )
-            except: #$Exception as exeption:
-                pass
-                # #$Print error in case of one
-                #$print('ERROR \'receiver\': ', exeption)
+            except Exception as exeption:
+
+                # Print error in case of one
+                print('ERROR \'receiver\': ', exeption)
 
 
     def db_insert_data(self, data, email_path):
@@ -461,7 +458,7 @@ class EmailSlicer:
         # The db_rebuild function checks whether or not the given database and acts accordingly
         # :param db_name: name of the database
 
-        #$print('[INFO] Rebuilding database')
+        print('[INFO] Rebuilding database')
 
         # Get database connection
         connection = db_opperations.db_connection.open_connection(self.output_directory, self.db_name)
@@ -722,8 +719,8 @@ class EmailSlicer:
 if __name__ == "__main__":
     
     # Start time count in order to get program execution time
-    #$start_time = time.time()
-    #$print('##########\n[INFO] Started program')
+    start_time = time.time()
+    print('##########\n[INFO] Started program')
 
     # Create an ArgumentParser object to specify arguments for the program
     parser = argparse.ArgumentParser(
@@ -787,20 +784,20 @@ if __name__ == "__main__":
 
             # Create new path
             os.makedirs(output_extraction)
-            #$print('[INFO] Successfully created the directory \'%s\'!' %
-            #$    output_extraction)
+            print('[INFO] Successfully created the directory \'%s\'!' %
+                output_extraction)
 
         else:
-            pass
+
             # In case it exists
-            #$print('[INFO] Directory \'%s\' already exists!' 
-            #$    % output_extraction)
+            print('[INFO] Directory \'%s\' already exists!' 
+                % output_extraction)
 
     except OSError:
-        pass
+
         # In case of error
-        #$print('[ERROR] Creation of the directory \'%s\' failed!' 
-        #$    % output_extraction)
+        print('[ERROR] Creation of the directory \'%s\' failed!' 
+            % output_extraction)
 
         # Exit program (code -2)
         exit(ERROR_OUTPUT_DIRECTORY)
@@ -813,7 +810,7 @@ if __name__ == "__main__":
     # -b                - Don't save RTF-Body attachments
     # -e                - As with -M, but include extensions on output files
     # -j <integer>      - Number of parallel jobs to run
-    # -q                - Quiet. Only #$print error messages
+    # -q                - Quiet. Only print error messages
     # -d <filename>     - Debug to file.
     # -o <dirname>      - Output directory to write files to. CWD is changed *after* opening pst file
 
@@ -830,35 +827,34 @@ if __name__ == "__main__":
         if operation_system == 'nt':
 
             # Operation System: Windows
-            cmd = ('{}\\utils\\readpst\\bin\\readpst.exe -q -D -b -e -j {} -o {} {}'
-                .format(os.path.dirname(os.path.realpath(__file__)), number_processes, output_extraction, file_path))  # retunrs 0 in case of success
+            cmd = ('C:/Users/2151580/Desktop/bin/readpst.exe -D -b -e -j {} -o {} {}'
+                .format(number_processes, output_extraction, file_path))  # retunrs 0 in case of success
             subprocess.call(cmd, shell=True)
             
         elif operation_system == 'posix':
 
             # Operation System: Linux
             # retunrs 0 in case of success
-            cmd = 'readpst -q -D -b -e -j {} -o {} {}'.format(
+            cmd = 'readpst -D -b -e -j {} -o {} {}'.format(
                 number_processes, output_extraction, file_path)
             subprocess.call(cmd, shell=True)
 
         else:
 
             # In case the Operation System is different
-            #$print('[ERROR] Invalid operation system ({})! Exited...'
-            #$    .format(operation_system))
+            print('[ERROR] Invalid operation system ({})! Exited...'
+                .format(operation_system))
 
             # Program execution time
-            #$end_time = time.time()
-            #$execution_time = end_time - start_time
-            #$print('[INFO] Exited program: {}\n##########'
-            #$    .format(execution_time))
+            end_time = time.time()
+            execution_time = end_time - start_time
+            print('[INFO] Exited program: {}\n##########'
+                .format(execution_time))
 
             # Exit program (code -1)
             exit(ERROR_OS)
     else:
-        pass
-        #$print('[INFO] Skipping email extraction')
+        print('[INFO] Skipping email extraction')
 
     user_email = args.email
 
@@ -873,10 +869,10 @@ if __name__ == "__main__":
     es.run()
     
     # Program execution time
-    #$end_time = time.time()
-    #$execution_time = end_time - start_time
-    #$print('[INFO] Finished program: {} ({} min)\n##########'
-    #$    .format(execution_time, execution_time/60))
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print('[INFO] Finished program: {} ({} min)\n##########'
+        .format(execution_time, execution_time/60))
 
     # Exit program (code 0)
     exit(SUCCESS)
