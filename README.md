@@ -5,7 +5,7 @@ Degree fromn ESTG "Escola Superior de Tecnologia e Gestão do Instituto Politéc
 
 The focous of this program is create an alternative to the module Email Parser, used by Autopsy, in an attemp to provide functionalities that this one lacks, im particulary, extracting individual email messages.
 
-We also provide the alternative to use it as a report module or as a standalone application.
+Is also provided the alternative to use it as a report module or as a standalone application.
 
 
 ## Getting Started
@@ -13,7 +13,7 @@ We also provide the alternative to use it as a report module or as a standalone 
 ### Prerequisites
 
 * [Python](https://www.python.org/) (version 3 is recomended)
-* [Autopsy](https://www.autopsy.com/) (If intended to be run with the program) 
+* [Autopsy](https://www.autopsy.com/) (if intended to be run inside the program) 
 
 ### Installing
 
