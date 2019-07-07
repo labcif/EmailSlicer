@@ -19,29 +19,28 @@ We also provide the alternative to use it as a report module or as a standalone 
 
 There are two options providend when running this program:
 
-* As a [Autopsy](https://www.autopsy.com/) module
-    1. Download [Labcif-bhh-autopsy.nbm](link) 
+* As an Autopsy module:
+    1. Download [EmailSlicerReportModule.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerReportModule.zip) 
     2. Extract its content to Tools - Python Plugins 
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
         * Windows: py -m pip install -r required_packages.txt --user
     
     
 * As a standalone application
-    1. Download [Browser-History-Histogram.jar](link)
+    1. Download [EmailSlicerStandalone.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerStandalone.zip)
     2. Extract its content to desired location
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
         * Windows: py -m pip install -r required_packages.txt --user
 
 ### Run
 
-* As a [Autopsy](https://www.autopsy.com/) module
+* As an Autopsy module:
     1. Add the desired files to be analised to the opened case 
     2. Select "Generate Report"
     3. Select "Email Slicer report"
-    4. Select the desired file to be analised
     5. Wait for the module to finish (the extracted content will be stored in the "TEMP" folder of the current case)
         
-* As a standalone application
+* As a standalone application:
     1. Open a temrinal window
     2. Navigate to the extrated location o the program
     3. Run the gram (run py EmailSlicer.py -h for options)
@@ -49,5 +48,5 @@ There are two options providend when running this program:
 
 ## Authors
 
-* **André Noguueira (2151580@my.ipleiria.pt)**
+* **André Nogueira (2151580@my.ipleiria.pt)**
 * Projet developed under the guidance and coordination of Professors Dr. **Miguel Frade** and **Patrício Domingues** 
