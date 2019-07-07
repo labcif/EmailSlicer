@@ -24,13 +24,15 @@ There are two options providend when running this program:
     2. Extract its content to Tools - Python Plugins 
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
         * Windows: py -m pip install -r required_packages.txt --user
+        * Linux: python3 -m pip install -r required_packages.txt --user
     
     
-* As a standalone application
+* As a standalone application:
     1. Download [EmailSlicerStandalone.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerStandalone.zip)
     2. Extract its content to desired location
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
         * Windows: py -m pip install -r required_packages.txt --user
+        * Linux: python3 -m pip install -r required_packages.txt --user
 
 ### Run
 
