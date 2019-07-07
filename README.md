@@ -3,7 +3,7 @@
 Autopsy module to split individual email messages from large files (e.g. PST files) within the scope of final project from the Computer Science 
 Degree fromn ESTG "Escola Superior de Tecnologia e Gestão do Instituto Politécnico de Leiria", Portugal.
 
-The focous of this program is ti create an alternative to the module Email Parser, used by Autopsy, in an attemp to provide funtionalities that this one lacks, im particulary, extracting individual email messages.
+The focous of this program is create an alternative to the module Email Parser, used by Autopsy, in an attemp to provide functionalities that this one lacks, im particulary, extracting individual email messages.
 
 We also provide the alternative to use it as a report module or as a standalone application.
 
