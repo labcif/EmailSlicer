@@ -19,22 +19,28 @@ Is also provided the alternative to use it as a report module or as a standalone
 
 There are two options providend when running this program:
 
-* As an Autopsy module:
-    1. Download [EmailSlicerReportModule.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerReportModule.zip) 
+* As an Autopsy module (Windows):
+    1. Download [EmailSlicerReportModule.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerReportModuleWindows.zip) 
     2. Extract its content to Tools - Python Plugins 
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
-        * Windows: py -m pip install -r required_packages.txt --user
-        * Linux: python3 -m pip install -r required_packages.txt --user
-                 sudo apt install pst-utils, graphviz
+        * py -m pip install -r required_packages.txt --user
     
+* As an Autopsy module (Linux):
+    1. Download [EmailSlicerReportModule.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerReportModuleLinux.zip) 
+    2. Extract its content to Tools - Python Plugins 
+    3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
+        * python3 -m pip install -r required_packages.txt --user
+        * sudo apt install pst-utils, graphviz
     
 * As a standalone application:
     1. Download [EmailSlicerStandalone.zip](https://github.com/labcif/EmailSlicer/releases/download/v0.1/EmailSlicerStandalone.zip)
     2. Extract its content to desired location
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
-        * Windows: py -m pip install -r required_packages.txt --user
-        * Linux: python3 -m pip install -r required_packages.txt --user
-                 sudo apt install pst-utils, graphviz
+        * Windows:
+            1. py -m pip install -r required_packages.txt --user
+        * Linux: 
+            1. python3 -m pip install -r required_packages.txt --user
+            2. sudo apt install pst-utils, graphviz
 
 ### Run
 
@@ -52,5 +58,5 @@ There are two options providend when running this program:
 
 ## Authors
 
-* **André Nogueira (2151580@my.ipleiria.pt)**
-* Projet developed under the guidance and coordination of Professors Dr. **Miguel Frade** and **Patrício Domingues** 
+* **André Agostinho Nogueira (andre.nogueira@email.com)**
+* Projet developed under the guidance and coordination of Professors Dr. **Miguel Monteiro de Sousa Frade** and **Patrício Rodrigues Domingue** 
