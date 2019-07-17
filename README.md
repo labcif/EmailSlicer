@@ -25,6 +25,7 @@ There are two options providend when running this program:
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
         * Windows: py -m pip install -r required_packages.txt --user
         * Linux: python3 -m pip install -r required_packages.txt --user
+                 sudo apt install pst-utils, graphviz
     
     
 * As a standalone application:
@@ -33,6 +34,7 @@ There are two options providend when running this program:
     3. Install dependencies, by oppening the terminal inside de extrated folder and running the command: 
         * Windows: py -m pip install -r required_packages.txt --user
         * Linux: python3 -m pip install -r required_packages.txt --user
+                 sudo apt install pst-utils, graphviz
 
 ### Run
 
