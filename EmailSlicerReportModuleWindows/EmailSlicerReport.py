@@ -185,11 +185,11 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
 
         try:
             proc = Runtime.getRuntime().exec(
-                ("python3 %s/EmailSlicerReportModule/EmailSlicer/EmailSlicer.py %s %s %s %s")
+                ("python3 %s/EmailSlicerReportModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s")
                 % (pythonModulesPath, selected, output, "-j 8", "-t \"%s\"") % (reportName))
         except:
             proc = Runtime.getRuntime().exec(
-                ("py %s/EmailSlicerReportModule/EmailSlicer/EmailSlicer.py %s %s %s %s")
+                ("py %s/EmailSlicerReportModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s")
                 % (pythonModulesPath, selected, output, "-j 8", "-t \"%s\"") % (reportName))
         finally:
             proc.waitFor()
