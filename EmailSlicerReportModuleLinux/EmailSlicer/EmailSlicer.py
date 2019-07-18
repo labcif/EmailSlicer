@@ -763,7 +763,7 @@ if __name__ == "__main__":
         exit(ERROR_OS)
 
     # Report title
-    title = str(sys.argv[6] + " " + sys.argv[7])
+    title = str(sys.argv[6] + " " + sys.argv[7]).strip('"')
 
     # Run EmailSlicer
     es = EmailSlicer(
