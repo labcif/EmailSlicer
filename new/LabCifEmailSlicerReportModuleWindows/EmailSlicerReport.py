@@ -68,11 +68,12 @@ from javax.swing import JComboBox
 from java.lang import Runtime
 from javax.swing import JComponent
 
+import hashlib
 import inspect
 import subprocess
 import shutil
 
-FOLDER_PATH = "/ES_Temp"
+FOLDER_PATH = "/LabCifEmailSlicer"
 
 
 def system(command):
@@ -108,7 +109,7 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
     def getRelativeFilePath(self):
         return "ES_" + Case.getCurrentCase().getName() + ".html"
 
-    def createTempDir(self, dir):
+    def createDir(self, dir):
         try:
             os.mkdir(self.temp_dir + dir)
         except:
@@ -139,8 +140,8 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
         try:
             selected = self.configPanel.cbSelectedItemWithPath()
             selected_name = self.configPanel.cbSelectedItem()
-            selected_name = selected_name.replace(".pst", "") if selected_name.endswith(
-                ".pst") else selected_name.replace(".ost", "")
+            #selected_name = selected_name.replace(".pst", "") if selected_name.endswith(
+            #    ".pst") else selected_name.replace(".ost", "")
         except:
             selected = ""
             selected_name = ""
@@ -158,10 +159,12 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
 
         #Runtime.getRuntime().exec("python C:/Users/2151580/AppData/Roaming/autopsy/python_modules/EmailSlicerReportModule/write.py")
 
-        self.temp_dir = Case.getCurrentCase().getTempDirectory()
+        self.temp_dir = Case.getCurrentCase().getModuleDirectory()
+        self.temp_dir = self.temp_dir.replace("Temp", "ModuleOutput")
+       
 
         # Temp directory to store extracted files
-        self.createTempDir(FOLDER_PATH)
+        self.createDir(FOLDER_PATH)
 
         # Skip option
         skip = self.configPanel.getSkipEmailExtraction()
@@ -177,6 +180,8 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
         output = re.sub(r'\s+', '', output)
 
         
+
+        
         pythonModulesPath = PlatformUtil().getUserPythonModulesPath().replace("\\", "/")
         
         
@@ -184,13 +189,24 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
         progressBar.increment()
         progressBar.updateStatusLabel("Extracting files")
 
+        
+        # should only be one
+        pureFile = self.configPanel.cbSelectedPureFiles()
+        dbHash = self.calculate(pureFile.getLocalPath())
+        
+
+        flag = False
+
+        if os.path.exists(output) and dbHash + ".db" in next(os.walk(output))[2]:
+            flag = True
+
         try:
             proc = Runtime.getRuntime().exec(
-                ("python3 %s/EmailSlicerReportModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s")
+                ("python3 %s/LabCifEmailSlicerReportModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s")
                 % (pythonModulesPath, selected, output, "-j 8", "-t \"%s\"") % (reportName))
         except:
             proc = Runtime.getRuntime().exec(
-                ("py %s/EmailSlicerReportModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s")
+                ("py %s/LabCifEmailSlicerReportModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s")
                 % (pythonModulesPath, selected, output, "-j 8", "-t \"%s\"") % (reportName))
         finally:
             proc.waitFor()
@@ -211,9 +227,8 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
                 finally:
                     break
 
-        # should only be one
-        pureFile = self.configPanel.cbSelectedPureFiles()
-        self.processEmails(dbConn, sleuthkitCase, pureFile)
+        if not flag:
+            self.processEmails(dbConn, sleuthkitCase, pureFile)
 
         #'python3 EmailSlicer.py ../EmailSamples/ipleiria.pst output_files -j 8 -t "TESTE REPORT" -e "2151580@my.ipleiria.pt" "2161795@my.ipleiria.pt'
 
@@ -365,7 +380,8 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
             ModuleDataEvent(self.getName(), artIdEmailType, None))
         
         # Close the database statement
-        stmt.close()    
+        stmt.close()
+        dbConn.close()    
 
 
     def getAccount(self, skCase, _file, emailAddress):
@@ -378,6 +394,24 @@ class EmailSlicerReportModule(GeneralReportModuleAdapter):
         self.configPanel = EmailSlicerReportModuleConfigPanel()
         return self.configPanel
 
+    def calculate(self, _file):
+        # The calculate_md5 function returns a md5 chechsum of the give file
+        # :param file: file to calculate hash
+
+        # Call md5 from hashlib
+        hash_md5 = hashlib.md5()
+
+        # Open file in binary read mode
+        with open(_file, 'rb') as f:
+
+            # Read chunks of 4096 bytes sequntially
+            for chunk in iter(lambda: f.read(4096), b''):
+
+                # Feed the chunks to the md5 funtion
+                hash_md5.update(chunk)
+
+        # Return md5 hash of the given file
+        return hash_md5.hexdigest()
 
 
 class EmailSlicerReportModuleConfigPanel(JPanel):

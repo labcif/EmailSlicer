@@ -22,6 +22,8 @@ import email
 import db_opperations
 import writers
 import utils
+import json
+
 
 
 #################################
@@ -71,13 +73,14 @@ ERROR_OUTPUT_DIRECTORY = -2
 
 class EmailSlicer:
 
-    def __init__(self, _file, output_directory, output_extraction, report_title, skip, user_email, extract_only):
-
+    def __init__(self, _file, output_directory, output_extraction, report_title, skip, user_email, extract_only, boool):
+        
         self._file = _file
         self.output_directory = output_directory
         self.output_extraction = output_extraction
         self.title = report_title
         self.target_email = user_email
+        self.boool = boool
 
         date_dict = {x: 0 for x in range(1, 25)}
         self.date_list = [date_dict.copy() for x in range(7)]
@@ -91,7 +94,7 @@ class EmailSlicer:
         self.extract_only = extract_only
 
         self.skip = skip
-        if not skip:
+        if boool or not skip:
             # Rebuild database (drops if exists and creates)
             self.db_rebuild()
         #$else:
@@ -103,50 +106,64 @@ class EmailSlicer:
             #$print('[INFO] Started file scaning')
         #$else:
             #$print('[INFO] Skipping file scaning')
-           
-        total_count = []
+        if boool:
+            total_count = []
 
-        # Iterates previous base output directory
-        for root, _, files in os.walk(self.output_extraction):
+            # Iterates previous base output directory
+            for root, _, files in os.walk(self.output_extraction):
 
-            count_ics = 0
-            count_vcf = 0
-            count_eml = 0
-            count_unknown = 0
-            number_of_files = [
-                count_ics,
-                count_vcf,
-                count_eml,
-                count_unknown
-            ]
+                count_ics = 0
+                count_vcf = 0
+                count_eml = 0
+                count_unknown = 0
+                number_of_files = [
+                    count_ics,
+                    count_vcf,
+                    count_eml,
+                    count_unknown
+                ]
 
-            # iterate files
-            for _file in files:
-                # #$print("subd > " + root)
-                # #$print("main > " + "".join(dirs))
+                # iterate files
+                for _file in files:
+                    # #$print("subd > " + root)
+                    # #$print("main > " + "".join(dirs))
 
-                # Get full file path
-                file_full_path = os.path.join(root, _file)
+                    # Get full file path
+                    file_full_path = os.path.join(root, _file)
 
-                # Get file name
-                file_name = os.path.basename(_file)
+                    # Get file name
+                    file_name = os.path.basename(_file)
 
-                # Get file extention
-                file_extention = file_name.split('.')[1]
+                    # Get file extention
+                    file_extention = file_name.split('.')[1]
 
-                # Check if file extention is supported
-                number_of_files = self.process_file_extention(file_extention, file_full_path, number_of_files)
-            total_count.append(number_of_files)
-            # #$print(root.rsplit('/', 1)[-1] , "\n", number_of_files, "\n\n")
-#            #$print(rootdir)
-#           #$print(root.rsplit('/', 1)[-1])
-        # #$print(tree)
-    
-            
-        # Write reports
-        #$print('[INFO] Generating report...')
-
+                    # Check if file extention is supported
+                    number_of_files = self.process_file_extention(file_extention, file_full_path, number_of_files)
+                total_count.append(number_of_files)
+                # #$print(root.rsplit('/', 1)[-1] , "\n", number_of_files, "\n\n")
+    #            #$print(rootdir)
+    #           #$print(root.rsplit('/', 1)[-1])
+            # #$print(tree)
+        
+                
+            # Write reports
+            #$print('[INFO] Generating report...')
+        
+        
         if not self.extract_only:
+
+            try:
+                total_count_aux = []
+                with open(output_directory + "/" + "total_count.txt") as fp:
+                    lines = fp.readlines()
+                    for line in lines:
+                        total_count_aux.append(line.replace('\n', ''))
+                    total_count_aux = [n.strip() for n in total_count_aux]
+                    total_count = []            
+                    for s in total_count_aux:
+                        total_count.append(json.loads(s))
+            except:
+                pass
 
             # Write email messages sent by each email account in a .csv file
             sender_frequency = self.email_messages_sent_by_user_email()
@@ -172,6 +189,13 @@ class EmailSlicer:
             if self.target_email:
                 for target in self.target_email:
                     self.user_communication(target)
+        else:
+            with open(self.output_directory + "/" + "total_count.txt", "w") as fp:
+                for item in total_count:
+                    fp.write(''.join(str(item)))
+                    fp.write('\n')
+
+            
 
     #################################
     #          End of run           #
@@ -811,7 +835,7 @@ if __name__ == "__main__":
             #$    output_extraction)
 
         else:
-            exit(SUCCESS)
+            pass#exit(SUCCESS)
             # In case it exists
             #$print('[INFO] Directory \'%s\' already exists!' 
             #$    % output_extraction)
@@ -846,8 +870,13 @@ if __name__ == "__main__":
     # Get agrs.only value
     extract_only = args.only
 
+    # DB hash    
+    dbHash = utils.md5.calculate(file_path)
+
+    boool = dbHash + ".db" not in next(os.walk(output_extraction))[2]
+    
     # Case where skip is specified
-    if not skip:
+    if  boool or not skip:
     
         # Check current operation system
         if operation_system == 'nt':
@@ -892,7 +921,8 @@ if __name__ == "__main__":
         args.title, 
         skip, 
         user_email,
-        extract_only
+        extract_only,
+        boool
     )
     es.run()
     

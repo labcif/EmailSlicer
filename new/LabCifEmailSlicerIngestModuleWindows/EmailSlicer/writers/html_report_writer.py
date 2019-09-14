@@ -320,7 +320,7 @@ class Report:
         count_ics = 0
         count_vcf = 0
         count_eml = 0
-        
+
         for ics, vcf, eml, _ in data:
             count_ics += ics
             count_vcf += vcf

@@ -22,6 +22,8 @@ import email
 import db_opperations
 import writers
 import utils
+import json
+
 
 
 #################################
@@ -71,13 +73,14 @@ ERROR_OUTPUT_DIRECTORY = -2
 
 class EmailSlicer:
 
-    def __init__(self, _file, output_directory, output_extraction, report_title, skip, user_email):
-
+    def __init__(self, _file, output_directory, output_extraction, report_title, skip, user_email, extract_only, boool):
+        
         self._file = _file
         self.output_directory = output_directory
         self.output_extraction = output_extraction
         self.title = report_title
         self.target_email = user_email
+        self.boool = boool
 
         date_dict = {x: 0 for x in range(1, 25)}
         self.date_list = [date_dict.copy() for x in range(7)]
@@ -87,8 +90,11 @@ class EmailSlicer:
         # Get databse name
         # '6d9c6ff3a7ce5ec7f9dd122b1b4fcf7b'
         self.db_name = utils.md5.calculate(_file)
+        
+        self.extract_only = extract_only
+
         self.skip = skip
-        if not skip:
+        if boool or not skip:
             # Rebuild database (drops if exists and creates)
             self.db_rebuild()
         #$else:
@@ -100,76 +106,96 @@ class EmailSlicer:
             #$print('[INFO] Started file scaning')
         #$else:
             #$print('[INFO] Skipping file scaning')
-           
-        total_count = []
+        if not self.boool:
+            total_count = []
 
-        # Iterates previous base output directory
-        for root, _, files in os.walk(self.output_extraction):
+            # Iterates previous base output directory
+            for root, _, files in os.walk(self.output_extraction):
 
-            count_ics = 0
-            count_vcf = 0
-            count_eml = 0
-            count_unknown = 0
-            number_of_files = [
-                count_ics,
-                count_vcf,
-                count_eml,
-                count_unknown
-            ]
+                count_ics = 0
+                count_vcf = 0
+                count_eml = 0
+                count_unknown = 0
+                number_of_files = [
+                    count_ics,
+                    count_vcf,
+                    count_eml,
+                    count_unknown
+                ]
 
-            # iterate files
-            for _file in files:
-                # #$print("subd > " + root)
-                # #$print("main > " + "".join(dirs))
+                # iterate files
+                for _file in files:
+                    # #$print("subd > " + root)
+                    # #$print("main > " + "".join(dirs))
 
-                # Get full file path
-                file_full_path = os.path.join(root, _file)
+                    # Get full file path
+                    file_full_path = os.path.join(root, _file)
 
-                # Get file name
-                file_name = os.path.basename(_file)
+                    # Get file name
+                    file_name = os.path.basename(_file)
 
-                # Get file extention
-                file_extention = file_name.split('.')[1]
+                    # Get file extention
+                    file_extention = file_name.split('.')[1]
 
-                # Check if file extention is supported
-                number_of_files = self.process_file_extention(file_extention, file_full_path, number_of_files)
-            total_count.append(number_of_files)
-            # #$print(root.rsplit('/', 1)[-1] , "\n", number_of_files, "\n\n")
-#            #$print(rootdir)
-#           #$print(root.rsplit('/', 1)[-1])
-        # #$print(tree)
-    
+                    # Check if file extention is supported
+                    number_of_files = self.process_file_extention(file_extention, file_full_path, number_of_files)
+                total_count.append(number_of_files)
+                # #$print(root.rsplit('/', 1)[-1] , "\n", number_of_files, "\n\n")
+    #            #$print(rootdir)
+    #           #$print(root.rsplit('/', 1)[-1])
+            # #$print(tree)
+        
+                
+            # Write reports
+            #$print('[INFO] Generating report...')
+        
+        
+        if not self.extract_only:
+
+            try:
+                total_count_aux = []
+                with open(output_directory + "/" + "total_count.txt") as fp:
+                    lines = fp.readlines()
+                    for line in lines:
+                        total_count_aux.append(line.replace('\n', ''))
+                    total_count_aux = [n.strip() for n in total_count_aux]
+                    total_count = []            
+                    for s in total_count_aux:
+                        total_count.append(json.loads(s))
+            except:
+                pass
+
+            # Write email messages sent by each email account in a .csv file
+            sender_frequency = self.email_messages_sent_by_user_email()
+
+            # Write total number of email messages and email addresses in a .csv file
+            total_email_address = self.total_emails_and_users_emails()[0]['total_email_address']
+
+            # Write data to tsv
+            writers.tsv_writer.write(self.output_directory, self.date_list)
+
+            users_communication, counts = self.sender_receiver_total()
             
-        # Write reports
-        #$print('[INFO] Generating report...')
+            user_messages = self.users_messages(counts)
 
-        # Write email messages sent by each email account in a .csv file
-        sender_frequency = self.email_messages_sent_by_user_email()
+            # Write data to html report
+            writers.html_report_writer.Report(self.output_directory, self.title, total_email_address, total_count, self.output_directory, sender_frequency, self.date_list, users_communication, user_messages)
+            # writers.html_report_writer.write(self.title, self._file, sorted_email_frequency)
 
-        # Write total number of email messages and email addresses in a .csv file
-        total_email_address = self.total_emails_and_users_emails()[0]['total_email_address']
+            # Comunication between all users
+            self.users_communication()
+            
+            # In case of specified user email
+            if self.target_email:
+                for target in self.target_email:
+                    self.user_communication(target)
+        else:
+            with open(self.output_directory + "/" + "total_count.txt", "w") as fp:
+                for item in total_count:
+                    fp.write(''.join(str(item)))
+                    fp.write('\n')
 
-        # Write data to tsv
-        writers.tsv_writer.write(self.output_directory, self.date_list)
-
-        users_communication, counts = self.sender_receiver_total()
-        
-        user_messages = self.users_messages(counts)
-
-        # Write data to html report
-        writers.html_report_writer.Report(self.output_directory, self.title, total_email_address, total_count, self.output_directory, sender_frequency, self.date_list, users_communication, user_messages)
-        # writers.html_report_writer.write(self.title, self._file, sorted_email_frequency)
-
-
-        
-
-        # Comunication between all users
-        self.users_communication()
-        
-        # In case of specified user email
-        if self.target_email:
-            for target in self.target_email:
-                self.user_communication(target)
+            
 
     #################################
     #          End of run           #
@@ -226,8 +252,14 @@ class EmailSlicer:
         date = mail.date
 
         # Get body
-        body = mail.text_plain
-        body_html = mail.text_html
+        eplainBody = "".join(mail.text_plain).encode('utf-8')
+        ehtmlBody = "".join(mail.text_html).encode('utf-8')
+
+        dplainBody = eplainBody.decode('utf-8')
+        dhtmlBody = ehtmlBody.decode('utf-8')
+
+        body = dplainBody
+        body_html = dhtmlBody
 
         # Build heat map based on email message received time
         self.build_heat_map(_file, date)
@@ -751,6 +783,12 @@ if __name__ == "__main__":
                         help='Skip file extraction and database rebuild. Only gets the report files (default=false)', 
                         action='store_true', 
                         default=False)
+    
+    # skip: NOT rquired
+    parser.add_argument('-o', '--only',
+                        help='Only extract files, do not generate report (default=false)', 
+                        action='store_true',
+                        default=False)
 
 
     # email: NOT rquired
@@ -797,7 +835,7 @@ if __name__ == "__main__":
             #$    output_extraction)
 
         else:
-            exit(SUCCESS)            
+            pass#exit(SUCCESS)
             # In case it exists
             #$print('[INFO] Directory \'%s\' already exists!' 
             #$    % output_extraction)
@@ -809,7 +847,7 @@ if __name__ == "__main__":
         #$    % output_extraction)
 
         # Exit program (code -2)
-        exit(ERROR_OUTPUT_DIRECTORY)
+        #exit(ERROR_OUTPUT_DIRECTORY)
 
     # Get number of jobs
     number_processes = args.jobs
@@ -829,8 +867,16 @@ if __name__ == "__main__":
     # Get agrs.skip value
     skip = args.skip
 
+    # Get agrs.only value
+    extract_only = args.only
+
+    # DB hash    
+    dbHash = utils.md5.calculate(file_path)
+
+    boool = dbHash + ".db" not in next(os.walk(output_extraction))[2]
+    
     # Case where skip is specified
-    if not skip:
+    if not boool:
     
         # Check current operation system
         if operation_system == 'nt':
@@ -874,7 +920,9 @@ if __name__ == "__main__":
         output_extraction, 
         args.title, 
         skip, 
-        user_email
+        user_email,
+        extract_only,
+        boool
     )
     es.run()
     

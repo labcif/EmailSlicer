@@ -45,7 +45,11 @@ import json
 import subprocess, sys
 from java.io import StringWriter, FileReader, ByteArrayOutputStream
 from javax.script import ScriptEngineManager, SimpleScriptContext
-import mailparser
+flag = True
+try:
+    import mailparser
+except:
+    flag = False
 from org.sleuthkit.autopsy.report.ReportProgressPanel import ReportStatus
 
 from java.sql import DriverManager, SQLException
@@ -115,7 +119,7 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
         self.context = None
 
 
-    def createTempDir(self, dir):
+    def createDir(self, dir):
         try:
             os.mkdir(self.tempDir + dir)
         except:
@@ -147,7 +151,7 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
 
         self.tempDir = Case.getCurrentCase().getModuleDirectory() #getTempDirectory()
 
-        self.createTempDir(FOLDER_PATH)
+        self.createDir(FOLDER_PATH)
 
         self.skCase = Case.getCurrentCase().getSleuthkitCase()
 
@@ -207,11 +211,12 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
 
         ###progressBar.increment()
         ###progressBar.updateStatusLabel("Processing EML files")
-        self.processEmlEmails(self.skCase, emlFiles)
+        if flag:
+            self.processEmlEmails(self.skCase, emlFiles)
         
         ###progressBar.increment()
         ###progressBar.updateStatusLabel("Processing MSG files")
-        self.processMsgEmails(self.skCase, msgFiles)        
+            self.processMsgEmails(self.skCase, msgFiles)        
 
         ### Processing email files
 
@@ -443,92 +448,95 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
         for singleEmlFile in emlFiles:
 
             path = singleEmlFile.getLocalPath()
-            mail = mailparser.parse_from_file(path)
-                
-            for sender in mail.from_:
-                senderAccount = self.getAccount(skCase, singleEmlFile, sender[1])
-
-            receivers = []
-            otherAccounts = []
-            for receiver in mail.to:
-                receivers.append(receiver[1])
-                otherAccounts.append(self.getAccount(skCase, singleEmlFile, receiver[1]))
-
-            receivers = ", ".join(receivers)
-
-            subject = mail.subject
-
-            date = self.getDateEpoch(mail.date)         
-
-            """ handle attachments
-            attachs = mail.attachments
-
-            attachList = []
-            for attach in attachs:
-                att = {}
-                att['fn'] = attach['filename']
-                
-                # TSK_FILE_TYPE_SIG ?
-                att['ct'] = attach['mail_content_type']
-                
-                # TSK_FILE_TYPE_EXT ?
-                att['pl'] = attach['payload']
-                
-                with open('C:/Users/2151580/Desktop/' + att['fn'], 'wb') as f:
-                    f.write(base64.b64decode(att['pl']))
-                    att['rp'] = os.path.realpath(f.name)
-                    att['sz'] = os.path.getsize(att['rp'])
-                    f.close()
-                attachList.append(att)
-                
-
-            files = self.manageAttachments(attachList, file)         
-            if files:
-                for f in files:
-                    services = IngestServices.getInstance()
-                    services.fireModuleContentEvent(ModuleContentEvent(f))
-            """
-            
-            artEmail = singleEmlFile.newArtifact(artIdEmail)
-            artEmail.addAttributes((
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_PATH.getTypeID(), self.getName(), path)),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_TO.getTypeID(), self.getName(), receivers)),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_FROM.getTypeID(), self.getName(), sender[1])),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_DATETIME_RCVD.getTypeID(), self.getName(), date)),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_SUBJECT.getTypeID(), self.getName(), subject))
-            ))
-            
-            #ecompleteBody = "".join(mail.body).encode('utf-8')
-            eplainBody = "".join(mail.text_plain).encode('utf-8')
-            ehtmlBody = "".join(mail.text_html).encode('utf-8')
-
-            #dcompleteBody = ecompleteBody.decode('utf-8')
-            dplainBody = eplainBody.decode('utf-8')
-            dhtmlBody = ehtmlBody.decode('utf-8')
-            
-            if dplainBody:
-                artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_PLAIN.getTypeID(), self.getName(), dplainBody))
-            
-            if dhtmlBody:
-                artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_HTML.getTypeID(), self.getName(), dhtmlBody))
-
-            
-            skCase.getCommunicationsManager().addRelationships(senderAccount, otherAccounts, artEmail, Relationship.Type.MESSAGE, date)
-
             try:
-                # index the artifact for keyword search
-                self.blackboard.indexArtifact(artEmail)
-            except Blackboard.BlackboardException:
-                self.log(Level.SEVERE, "Error indexing artifact " + artEmail.getDisplayName())
+                mail = mailparser.parse_from_file(path)
+                
+                for sender in mail.from_:
+                    senderAccount = self.getAccount(skCase, singleEmlFile, sender[1])
 
-            # Fire an event to notify the UI and others that there is a new artifact  
-            IngestServices.getInstance().fireModuleDataEvent(
-                        ModuleDataEvent(self.getName(), artIdEmailType, None))
+                receivers = []
+                otherAccounts = []
+                for receiver in mail.to:
+                    receivers.append(receiver[1])
+                    otherAccounts.append(self.getAccount(skCase, singleEmlFile, receiver[1]))
+
+                receivers = ", ".join(receivers)
+
+                subject = mail.subject
+
+                date = self.getDateEpoch(mail.date)         
+
+                """ handle attachments
+                attachs = mail.attachments
+
+                attachList = []
+                for attach in attachs:
+                    att = {}
+                    att['fn'] = attach['filename']
+                    
+                    # TSK_FILE_TYPE_SIG ?
+                    att['ct'] = attach['mail_content_type']
+                    
+                    # TSK_FILE_TYPE_EXT ?
+                    att['pl'] = attach['payload']
+                    
+                    with open('C:/Users/2151580/Desktop/' + att['fn'], 'wb') as f:
+                        f.write(base64.b64decode(att['pl']))
+                        att['rp'] = os.path.realpath(f.name)
+                        att['sz'] = os.path.getsize(att['rp'])
+                        f.close()
+                    attachList.append(att)
+                    
+
+                files = self.manageAttachments(attachList, file)         
+                if files:
+                    for f in files:
+                        services = IngestServices.getInstance()
+                        services.fireModuleContentEvent(ModuleContentEvent(f))
+                """
+                
+                artEmail = singleEmlFile.newArtifact(artIdEmail)
+                artEmail.addAttributes((
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_PATH.getTypeID(), self.getName(), path)),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_TO.getTypeID(), self.getName(), receivers)),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_FROM.getTypeID(), self.getName(), sender[1])),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_DATETIME_RCVD.getTypeID(), self.getName(), date)),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_SUBJECT.getTypeID(), self.getName(), subject))
+                ))
+                
+                #ecompleteBody = "".join(mail.body).encode('utf-8')
+                eplainBody = "".join(mail.text_plain).encode('utf-8')
+                ehtmlBody = "".join(mail.text_html).encode('utf-8')
+
+                #dcompleteBody = ecompleteBody.decode('utf-8')
+                dplainBody = eplainBody.decode('utf-8')
+                dhtmlBody = ehtmlBody.decode('utf-8')
+                
+                if dplainBody:
+                    artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_PLAIN.getTypeID(), self.getName(), dplainBody))
+                
+                if dhtmlBody:
+                    artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_HTML.getTypeID(), self.getName(), dhtmlBody))
+
+                
+                skCase.getCommunicationsManager().addRelationships(senderAccount, otherAccounts, artEmail, Relationship.Type.MESSAGE, date)
+
+                try:
+                    # index the artifact for keyword search
+                    self.blackboard.indexArtifact(artEmail)
+                except Blackboard.BlackboardException:
+                    self.log(Level.SEVERE, "Error indexing artifact " + artEmail.getDisplayName())
+
+                # Fire an event to notify the UI and others that there is a new artifact  
+                IngestServices.getInstance().fireModuleDataEvent(
+                            ModuleDataEvent(self.getName(), artIdEmailType, None))
+            except:
+                pass
 
 
     def processMsgEmails(self, skCase, msgFiles):
@@ -538,63 +546,66 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
         for singleMsgFile in msgFiles:
 
             path = singleMsgFile.getLocalPath()
-            mail = mailparser.parse_from_file_msg(path)
-                
-            for sender in mail.from_:
-                senderAccount = self.getAccount(skCase, singleMsgFile, sender[1])
-
-            receivers = []
-            otherAccounts = []
-            for receiver in mail.to:
-                receivers.append(receiver[1])
-                otherAccounts.append(self.getAccount(skCase, singleMsgFile, receiver[1]))
-
-            receivers = ", ".join(receivers)
-
-            subject = mail.subject
-
-            date = self.getDateEpoch(mail.date)         
-            
-            artEmail = singleMsgFile.newArtifact(artIdEmail)
-            artEmail.addAttributes((
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_PATH.getTypeID(), self.getName(), path)),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_TO.getTypeID(), self.getName(), receivers)),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_FROM.getTypeID(), self.getName(), sender[1])),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_DATETIME_RCVD.getTypeID(), self.getName(), date)),
-                (BlackboardAttribute(
-                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_SUBJECT.getTypeID(), self.getName(), subject))
-            ))
-            
-            #ecompleteBody = "".join(mail.body).encode('utf-8')
-            eplainBody = "".join(mail.text_plain).encode('utf-8')
-            ehtmlBody = "".join(mail.text_html).encode('utf-8')
-
-            #dcompleteBody = ecompleteBody.decode('utf-8')
-            dplainBody = eplainBody.decode('utf-8')
-            dhtmlBody = ehtmlBody.decode('utf-8')
-            
-            if dplainBody:
-                artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_PLAIN.getTypeID(), self.getName(), dhtmlBody))
-            
-            if dhtmlBody:
-                artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_HTML.getTypeID(), self.getName(), dhtmlBody))
-
-            
-            skCase.getCommunicationsManager().addRelationships(senderAccount, otherAccounts, artEmail, Relationship.Type.MESSAGE, date)
-
             try:
-                # index the artifact for keyword search
-                self.blackboard.indexArtifact(artEmail)
-            except Blackboard.BlackboardException:
-                self.log(Level.SEVERE, "Error indexing artifact " + artEmail.getDisplayName())
+                mail = mailparser.parse_from_file_msg(path)
+                    
+                for sender in mail.from_:
+                    senderAccount = self.getAccount(skCase, singleMsgFile, sender[1])
 
-            # Fire an event to notify the UI and others that there is a new artifact  
-            IngestServices.getInstance().fireModuleDataEvent(
-                        ModuleDataEvent(self.getName(), artIdEmailType, None))
+                receivers = []
+                otherAccounts = []
+                for receiver in mail.to:
+                    receivers.append(receiver[1])
+                    otherAccounts.append(self.getAccount(skCase, singleMsgFile, receiver[1]))
+
+                receivers = ", ".join(receivers)
+
+                subject = mail.subject
+
+                date = self.getDateEpoch(mail.date)         
+                
+                artEmail = singleMsgFile.newArtifact(artIdEmail)
+                artEmail.addAttributes((
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_PATH.getTypeID(), self.getName(), path)),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_TO.getTypeID(), self.getName(), receivers)),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_FROM.getTypeID(), self.getName(), sender[1])),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_DATETIME_RCVD.getTypeID(), self.getName(), date)),
+                    (BlackboardAttribute(
+                        BlackboardAttribute.ATTRIBUTE_TYPE.TSK_SUBJECT.getTypeID(), self.getName(), subject))
+                ))
+                
+                #ecompleteBody = "".join(mail.body).encode('utf-8')
+                eplainBody = "".join(mail.text_plain).encode('utf-8')
+                ehtmlBody = "".join(mail.text_html).encode('utf-8')
+
+                #dcompleteBody = ecompleteBody.decode('utf-8')
+                dplainBody = eplainBody.decode('utf-8')
+                dhtmlBody = ehtmlBody.decode('utf-8')
+                
+                if dplainBody:
+                    artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_PLAIN.getTypeID(), self.getName(), dhtmlBody))
+                
+                if dhtmlBody:
+                    artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_HTML.getTypeID(), self.getName(), dhtmlBody))
+
+                
+                skCase.getCommunicationsManager().addRelationships(senderAccount, otherAccounts, artEmail, Relationship.Type.MESSAGE, date)
+
+                try:
+                    # index the artifact for keyword search
+                    self.blackboard.indexArtifact(artEmail)
+                except Blackboard.BlackboardException:
+                    self.log(Level.SEVERE, "Error indexing artifact " + artEmail.getDisplayName())
+
+                # Fire an event to notify the UI and others that there is a new artifact  
+                IngestServices.getInstance().fireModuleDataEvent(
+                            ModuleDataEvent(self.getName(), artIdEmailType, None))
+            except:
+                pass
 
 
     def getDateEpoch(self, date):
