@@ -31,6 +31,7 @@
 # Search for TODO for the things that you need to change
 # See http://sleuthkit.org/autopsy/docs/api-docs/4.6.0/index.html for documentation
 
+import hashlib
 from org.sleuthkit.datamodel import TskData
 from java.lang import Runtime
 from org.sleuthkit.autopsy.coreutils import PlatformUtil
@@ -180,9 +181,14 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
         
         pstFiles = fileManager.findFiles(dataSource, "%.pst%")
         ostFiles = fileManager.findFiles(dataSource, "%.ost%")
-        emlFiles = fileManager.findFiles(dataSource, "%.eml%")
+        emlFilesAux = fileManager.findFiles(dataSource, "%.eml%")
         msgFiles = fileManager.findFiles(dataSource, "%.msg%")
 
+        emlFiles = []
+        for _file in emlFilesAux:
+            if ".pst" not in _file.getParentPath() or ".ost" not in _file.getParentPath():
+                emlFiles.append(_file)
+        
         numFiles = int(len(pstFiles) + len(ostFiles) + len(emlFiles) + len(msgFiles))
         ###progressBar.setMaximumProgress(4)
         
@@ -193,6 +199,8 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
 
         ###progressBar.increment()
         ###progressBar.updateStatusLabel("Processing PST files")
+
+        
         self.processPstOstEmails(self.skCase, pstFiles)
 
         self.processPstOstEmails(self.skCase, ostFiles)
@@ -203,7 +211,7 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
         
         ###progressBar.increment()
         ###progressBar.updateStatusLabel("Processing MSG files")
-        self.processMsgEmails(self.skCase, msgFiles)
+        self.processMsgEmails(self.skCase, msgFiles)        
 
         ### Processing email files
 
@@ -221,168 +229,211 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
     def processPstOstEmails(self, skCase, pstFiles):
 
         for singleFile in pstFiles:
+            dbHash = self.calculate(singleFile.getLocalPath())
+
+            dir_abstract_file_info = skCase.getAbstractFileById(singleFile.getId())
 
             # Temp directory path to write extated emails
             output = (str(str(self.tempDir + FOLDER_PATH).replace("\\", "/") + "/%s_output") % (singleFile.getName()))
             output = re.sub(r'\s+', '', output)
 
-            try:
-                proc = Runtime.getRuntime().exec(
-                    ("python3 %s/LabCifEmailSlicerIngestModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s %s")
-                    % (self.pythonModulesPath, singleFile.getLocalPath(), output, "-j 8", "-t \"%s\"", "-o") % (""))
-            except:
-                proc = Runtime.getRuntime().exec(
-                    ("py %s/LabCifEmailSlicerIngestModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s %s")
-                    % (self.pythonModulesPath, "\"" +singleFile.getLocalPath() + "\"", output, "-j 8", "-t \"%s\"", "-o") % (""))
-            finally:
-                proc.waitFor()
-                ###progressBar.increment()
-                ###progressBar.updateStatusLabel("Adding artifacts to blackboard")
-            
-            for dbFile in os.listdir(output):
-                if dbFile.endswith('.db'):
-                    dbPath = os.path.join(output, dbFile)
-                    #self.log(Level.INFO, "Path to the mail database is ==> " + lclDbPath)
-                    try:
-                        Class.forName("org.sqlite.JDBC").newInstance()
-                        dbConn = DriverManager.getConnection("jdbc:sqlite:%s" % dbPath)
-                    except SQLException:
-                        #self.log(Level.INFO, "Could not open database file (not SQLite) " + lclDbPath + " (" + e.getMessage() + ")")
-                        return IngestModule.ProcessResult.OK
-                    finally:
-                        break
+            if os.path.exists(output) and dbHash + ".db" in next(os.walk(output))[2]:
+                continue
+            else:
 
-            query = '''
-                SELECT 
-                    relations.email_id as EMAIL_ID,
-                    se.id as SENDER_USER_ID, 
-                    se.email as TSK_EMAIL_FROM, 
-                    re.email as TSK_EMAIL_TO, 
-                    e.subject as TSK_SUBJECT, 
-                    e.body as TSK_PLAIN, 
-                    e.body_html as TSK_HTML, 
-                    e.date as TSK_DATETIME_RCVD, 
-                    e.location as TSK_PATH
-                FROM relations 
-                    JOIN users s ON s.id = relations.sender_user_id
-                    JOIN users r ON r.id = relations.receiver_user_id 
-                    JOIN users_emails se ON r.email_id = re.id
-                    JOIN users_emails re ON s.email_id = se.id
-                    JOIN emails e ON e.id = relations.email_id;
-            '''
-
-            #self.log(Level.INFO, "SQL Statement ==> ")
-            # Query the contacts table in the database and get all columns.
-            try:
-                stmt = dbConn.createStatement()
-                resultSet = stmt.executeQuery(query)
-                #self.log(Level.INFO, "query message table")
-            except SQLException:
-                #self.log(Level.INFO, "Error querying database for message table (" + e.getMessage() + ")")
-                #return IngestModule.ProcessResult.OK
-                pass
-
-            artIdEmail = skCase.getArtifactTypeID("TSK_EMAIL_MSG")
-            artIdEmailType = skCase.getArtifactType("TSK_EMAIL_MSG")
-
-            prevEmailID = ""
-            currEmailID = ""
-            prevSender = ""
-            receivers = []
-            otherAccounts = []
-
-            # Cycle through each row and create artifacts
-            while resultSet.next():
-                
                 try:
-
-                    currEmailID = resultSet.getString("EMAIL_ID")
-                    currSender = resultSet.getString("TSK_EMAIL_FROM")
-                    currReceiver = resultSet.getString("TSK_EMAIL_TO")
-
-                    prevSenderAccount = self.getAccount(skCase, singleFile, prevSender)
-                    
-                    if prevEmailID == "" or prevEmailID == currEmailID:
-
-                        receivers.append(currReceiver)
-                        otherAccounts.append(self.getAccount(skCase, singleFile, currReceiver))
-
-                    else:
-
-                        receivers = ", ".join(receivers)
-
-                        path = resultSet.getString("TSK_PATH")
-
-                        """
-                        fileManager = Case.getCurrentCase().getServices().getFileManager()
-                        df = fileManager.addDerivedFile(
-                            "teste", 
-                            path, 
-                            long(os.path.getsize(path)), 
-                            long(os.path.getctime(path)), 
-                            long(os.path.getctime(path)), 
-                            long(os.path.getatime(path)), 
-                            long(os.path.getmtime(path)), 
-                            True,
-                            singleFile, 
-                            "", 
-                            self.getName(), 
-                            EmailSlicerDataSourceIngestModuleFactory().getModuleVersionNumber(), 
-                            "")#TskData.EncodingType.NONE)
-
-                        artEmail = df.newArtifact(artIdEmail)
-                        """
-
-                        artEmail = singleFile.newArtifact(artIdEmail)
-                        artEmail.addAttributes((
-                            (BlackboardAttribute(
-                                BlackboardAttribute.ATTRIBUTE_TYPE.TSK_PATH.getTypeID(), self.getName(), path)),
-                            (BlackboardAttribute(
-                                BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_TO.getTypeID(), self.getName(), receivers)),
-                            (BlackboardAttribute(
-                                BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_FROM.getTypeID(), self.getName(), prevSender)),
-                            (BlackboardAttribute(
-                                BlackboardAttribute.ATTRIBUTE_TYPE.TSK_DATETIME_RCVD.getTypeID(), self.getName(), resultSet.getInt("TSK_DATETIME_RCVD"))),
-                            (BlackboardAttribute(
-                                BlackboardAttribute.ATTRIBUTE_TYPE.TSK_SUBJECT.getTypeID(), self.getName(), resultSet.getString("TSK_SUBJECT")))
-                        ))
-                        
-                        if resultSet.getString("TSK_PLAIN"):
-                            artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_PLAIN.getTypeID(), self.getName(), resultSet.getString("TSK_PLAIN")))
-                        
-                        if resultSet.getString("TSK_HTML"):
-                            artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_HTML.getTypeID(), self.getName(), resultSet.getString("TSK_HTML")))
-
-                        skCase.getCommunicationsManager().addRelationships(prevSenderAccount, otherAccounts, artEmail, Relationship.Type.MESSAGE, resultSet.getInt("TSK_DATETIME_RCVD"))
-                        
+                    proc = Runtime.getRuntime().exec(
+                        ("python3 %s/LabCifEmailSlicerIngestModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s %s")
+                        % (self.pythonModulesPath, singleFile.getLocalPath(), output, "-j 8", "-t \"%s\"", "-o") % (""))
+                except:
+                    proc = Runtime.getRuntime().exec(
+                        ("py %s/LabCifEmailSlicerIngestModuleWindows/EmailSlicer/EmailSlicer.py %s %s %s %s %s")
+                        % (self.pythonModulesPath, "\"" +singleFile.getLocalPath() + "\"", output, "-j 8", "-t \"%s\"", "-o") % (""))
+                finally:
+                    proc.waitFor()
+                    ###progressBar.increment()
+                    ###progressBar.updateStatusLabel("Adding artifacts to blackboard")
+                
+                for dbFile in os.listdir(output):
+                    if dbFile.endswith('.db'):
+                        dbPath = os.path.join(output, dbFile)
+                        #self.log(Level.INFO, "Path to the mail database is ==> " + lclDbPath)
                         try:
-
-                            # index the artifact for keyword search
-                            blackboard.indexArtifact(artEmail)
-            
-                        except:
-                            pass
-
+                            Class.forName("org.sqlite.JDBC").newInstance()
+                            dbConn = DriverManager.getConnection("jdbc:sqlite:%s" % dbPath)
+                        except SQLException:
+                            #self.log(Level.INFO, "Could not open database file (not SQLite) " + lclDbPath + " (" + e.getMessage() + ")")
+                            return IngestModule.ProcessResult.OK
                         finally:
-                            receivers = []
-                            otherAccounts = []
-                            
-                            receivers.append(currReceiver)
-                            otherAccounts.append(self.getAccount(skCase, singleFile, currReceiver))                    
-                    
-                    prevEmailID = currEmailID
-                    prevSender = currSender
+                            break
 
-                except SQLException as e:
-                    self.log(
-                        Level.INFO, "Error getting values from message table (" + e.getMessage() + ")")
-            
-            # Fire an event to notify the UI and others that there is a new artifact  
-            IngestServices.getInstance().fireModuleDataEvent(
-                ModuleDataEvent(self.getName(), artIdEmailType, None))
-            
-            # Close the database statement
-            stmt.close()    
+                query = '''
+                    SELECT 
+                        relations.email_id as EMAIL_ID,
+                        se.id as SENDER_USER_ID, 
+                        se.email as TSK_EMAIL_FROM, 
+                        re.email as TSK_EMAIL_TO, 
+                        e.subject as TSK_SUBJECT, 
+                        e.body as TSK_PLAIN, 
+                        e.body_html as TSK_HTML, 
+                        e.date as TSK_DATETIME_RCVD, 
+                        e.location as TSK_PATH
+                    FROM relations 
+                        JOIN users s ON s.id = relations.sender_user_id
+                        JOIN users r ON r.id = relations.receiver_user_id 
+                        JOIN users_emails se ON r.email_id = re.id
+                        JOIN users_emails re ON s.email_id = se.id
+                        JOIN emails e ON e.id = relations.email_id;
+                '''
+
+                #self.log(Level.INFO, "SQL Statement ==> ")
+                # Query the contacts table in the database and get all columns.
+                try:
+                    stmt = dbConn.createStatement()
+                    resultSet = stmt.executeQuery(query)
+                    #self.log(Level.INFO, "query message table")
+                except SQLException:
+                    #self.log(Level.INFO, "Error querying database for message table (" + e.getMessage() + ")")
+                    #return IngestModule.ProcessResult.OK
+                    pass
+
+                artIdEmail = skCase.getArtifactTypeID("TSK_EMAIL_MSG")
+                artIdEmailType = skCase.getArtifactType("TSK_EMAIL_MSG")
+
+                prevEmailID = ""
+                currEmailID = ""
+                prevSender = ""
+                receivers = []
+                otherAccounts = []
+
+                # Cycle through each row and create artifacts
+                while resultSet.next():
+                    
+                    try:
+
+                        currEmailID = resultSet.getString("EMAIL_ID")
+                        currSender = resultSet.getString("TSK_EMAIL_FROM")
+                        currReceiver = resultSet.getString("TSK_EMAIL_TO")
+
+                        prevSenderAccount = self.getAccount(skCase, singleFile, prevSender)
+                        
+                        if prevEmailID == "" or prevEmailID == currEmailID:
+
+                            receivers.append(currReceiver)
+                            otherAccounts.append(self.getAccount(skCase, singleFile, currReceiver))
+
+                        else:
+
+                            receivers = ", ".join(receivers)
+
+                            path = resultSet.getString("TSK_PATH")
+
+                            """
+                            fileManager = Case.getCurrentCase().getServices().getFileManager()
+                            df = fileManager.addDerivedFile(
+                                "teste", 
+                                path, 
+                                long(os.path.getsize(path)), 
+                                long(os.path.getctime(path)), 
+                                long(os.path.getctime(path)), 
+                                long(os.path.getatime(path)), 
+                                long(os.path.getmtime(path)), 
+                                True,
+                                singleFile, 
+                                "", 
+                                self.getName(), 
+                                EmailSlicerDataSourceIngestModuleFactory().getModuleVersionNumber(), 
+                                "")#TskData.EncodingType.NONE)
+
+                            artEmail = df.newArtifact(artIdEmail)
+                            """
+                            dump_dir = os.path.dirname(path)
+
+                            files = next(os.walk(dump_dir))[2]
+                            for file in files:
+                                if file == os.path.basename(path):
+                                    dev_file = os.path.join(dump_dir, file)
+
+                                    rel_path = os.path.join("ModuleOutput", "LabCifEmailSlicer\\" + os.path.basename(os.path.normpath(output)))
+
+                                    try:
+                                        os.makedirs(rel_path)
+                                    except:
+                                        pass
+
+                                    local_file = os.path.relpath(os.path.dirname(dev_file), output)
+                                    local_file = os.path.join(rel_path, local_file, file)
+                                    #local_file = os.path.join(local_dir, file)
+                                    # Add derived file
+                                    # Parameters Are:
+                                    #    File Name, Local Path, size, ctime, crtime, atime, mtime, isFile, Parent File, rederive Details, Tool Name, 
+                                    #     Tool Version, Other Details, Encoding Type
+                                    derived_file = skCase.addDerivedFile(
+                                        resultSet.getString("TSK_SUBJECT") + ".eml", local_file, os.path.getsize(dev_file), + \
+                                        0, 0, 0, 0, True, 
+                                        dir_abstract_file_info, 
+                                        "", 
+                                        self.getName(), 
+                                        EmailSlicerDataSourceIngestModuleFactory().getModuleVersionNumber(),
+                                        "", TskData.EncodingType.NONE)
+                                    IngestServices.getInstance().fireModuleContentEvent(ModuleContentEvent(derived_file))
+                                    break
+
+                            artEmail = derived_file.newArtifact(artIdEmail)
+                            artEmail.addAttributes((
+                                (BlackboardAttribute(
+                                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_PATH.getTypeID(), self.getName(), local_file)),
+                                (BlackboardAttribute(
+                                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_TO.getTypeID(), self.getName(), receivers)),
+                                (BlackboardAttribute(
+                                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_FROM.getTypeID(), self.getName(), prevSender)),
+                                (BlackboardAttribute(
+                                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_DATETIME_RCVD.getTypeID(), self.getName(), resultSet.getInt("TSK_DATETIME_RCVD"))),
+                                (BlackboardAttribute(
+                                    BlackboardAttribute.ATTRIBUTE_TYPE.TSK_SUBJECT.getTypeID(), self.getName(), resultSet.getString("TSK_SUBJECT")))
+                            ))
+                            
+                            if resultSet.getString("TSK_PLAIN"):
+                                artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_PLAIN.getTypeID(), self.getName(), resultSet.getString("TSK_PLAIN")))
+                            
+                            if resultSet.getString("TSK_HTML"):
+                                artEmail.addAttribute(BlackboardAttribute(BlackboardAttribute.ATTRIBUTE_TYPE.TSK_EMAIL_CONTENT_HTML.getTypeID(), self.getName(), resultSet.getString("TSK_HTML")))
+
+                            skCase.getCommunicationsManager().addRelationships(prevSenderAccount, otherAccounts, artEmail, Relationship.Type.MESSAGE, resultSet.getInt("TSK_DATETIME_RCVD"))
+                            
+                            try:
+
+                                # index the artifact for keyword search
+                                blackboard.indexArtifact(artEmail)
+                
+                            except:
+                                pass
+
+                            finally:
+                                receivers = []
+                                otherAccounts = []
+                                
+                                receivers.append(currReceiver)
+                                otherAccounts.append(self.getAccount(skCase, singleFile, currReceiver))                    
+                        
+                        prevEmailID = currEmailID
+                        prevSender = currSender
+
+                        # Fire an event to notify the UI and others that there is a new artifact  
+                        IngestServices.getInstance().fireModuleDataEvent(
+                            ModuleDataEvent(self.getName(), artIdEmailType, None))
+
+                    except SQLException as e:
+                        self.log(
+                            Level.INFO, "Error getting values from message table (" + e.getMessage() + ")")
+                
+                # Fire an event to notify the UI and others that there is a new artifact  
+                #IngestServices.getInstance().fireModuleDataEvent(
+                #    ModuleDataEvent(self.getName(), artIdEmailType, None))
+                
+                # Close the database statement
+                stmt.close()
+                dbConn.close()
 
 
     def processEmlEmails(self, skCase, emlFiles):
@@ -552,6 +603,26 @@ class EmailSlicerDataSourceIngestModule(DataSourceIngestModule):
         except:
             return 0        
 
+
+
+    def calculate(self, _file):
+        # The calculate_md5 function returns a md5 chechsum of the give file
+        # :param file: file to calculate hash
+
+        # Call md5 from hashlib
+        hash_md5 = hashlib.md5()
+
+        # Open file in binary read mode
+        with open(_file, 'rb') as f:
+
+            # Read chunks of 4096 bytes sequntially
+            for chunk in iter(lambda: f.read(4096), b''):
+
+                # Feed the chunks to the md5 funtion
+                hash_md5.update(chunk)
+
+        # Return md5 hash of the given file
+        return hash_md5.hexdigest()
 
     def getAccount(self, skCase, _file, emailAddress):
         return skCase.getCommunicationsManager().createAccountFileInstance(Account.Type.EMAIL, emailAddress, self.getName(), _file)

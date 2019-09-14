@@ -228,8 +228,14 @@ class EmailSlicer:
         date = mail.date
 
         # Get body
-        body = mail.text_plain
-        body_html = mail.text_html
+        eplainBody = "".join(mail.text_plain).encode('utf-8')
+        ehtmlBody = "".join(mail.text_html).encode('utf-8')
+
+        dplainBody = eplainBody.decode('utf-8')
+        dhtmlBody = ehtmlBody.decode('utf-8')
+
+        body = dplainBody
+        body_html = dhtmlBody
 
         # Build heat map based on email message received time
         self.build_heat_map(_file, date)
