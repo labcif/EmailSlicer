@@ -58,5 +58,12 @@ There are two options providend when running this program:
 
 ## Authors
 
-* **André Agostinho Nogueira (andre.nogueira@email.com)**
+* **André Agostinho Nogueira**
 * Projet developed under the guidance and coordination of Professors Dr. **Miguel Monteiro de Sousa Frade** and **Patrício Rodrigues Domingue** 
+
+## NOTES: 
+
+* Project still in development.
+* The "Contest" version was only tested on Windows machines and it's the version that will be submitted to Autopsy module contest.
+* The "Project" version was part of a school project and it was modified to be submitted to the Autopsy module contest.
+* In case of any bug feel free to contact me at andre.nogueira@email.com
